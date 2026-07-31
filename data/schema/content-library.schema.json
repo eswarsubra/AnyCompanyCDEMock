@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anycompany-apparel/review-pipeline/content-library.schema.json",
+  "title": "AnyCompany Apparel — Review content library",
+  "description": "Curated multilingual building blocks the generator assembles into reviews. This is the CONTRACT between the content library (data/content/) and the generator engine (generator/). All content is synthetic and MUST contain no PII (no real names, emails, phone numbers, addresses, order numbers).",
+  "type": "object",
+  "required": ["schema_version", "products", "phrases"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "products": {
+      "type": "array",
+      "description": "The apparel catalog. 10-15 products. Names are English.",
+      "minItems": 10,
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": ["product_id", "product_name"],
+        "additionalProperties": false,
+        "properties": {
+          "product_id": { "type": "string", "pattern": "^prod-[0-9]{3}$" },
+          "product_name": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "phrases": {
+      "type": "object",
+      "description": "Per-language phrase banks the generator draws from. One key per supported language.",
+      "required": ["en", "fr", "de", "es", "it", "pt"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "$ref": "#/$defs/language_bank" },
+        "fr": { "$ref": "#/$defs/language_bank" },
+        "de": { "$ref": "#/$defs/language_bank" },
+        "es": { "$ref": "#/$defs/language_bank" },
+        "it": { "$ref": "#/$defs/language_bank" },
+        "pt": { "$ref": "#/$defs/language_bank" }
+      }
+    }
+  },
+  "$defs": {
+    "language_bank": {
+      "type": "object",
+      "description": "Phrase bank for one language. Titles and body sentences are grouped by sentiment so the generator can align them with a rating.",
+      "required": ["titles", "sentences"],
+      "additionalProperties": false,
+      "properties": {
+        "titles": {
+          "type": "object",
+          "required": ["positive", "neutral", "negative"],
+          "additionalProperties": false,
+          "properties": {
+            "positive": { "$ref": "#/$defs/phrase_list" },
+            "neutral": { "$ref": "#/$defs/phrase_list" },
+            "negative": { "$ref": "#/$defs/phrase_list" }
+          }
+        },
+        "sentences": {
+          "type": "object",
+          "required": ["positive", "neutral", "negative"],
+          "additionalProperties": false,
+          "properties": {
+            "positive": { "$ref": "#/$defs/phrase_list" },
+            "neutral": { "$ref": "#/$defs/phrase_list" },
+            "negative": { "$ref": "#/$defs/phrase_list" }
+          }
+        }
+      }
+    },
+    "phrase_list": {
+      "type": "array",
+      "description": "A list of reusable phrases. May contain the literal placeholder {product} which the generator substitutes with a product name.",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}
