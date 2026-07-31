@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# Build / IaC artifacts
+dist/
+build/
+cdk.out/
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Secrets & local config — NEVER commit credentials
+.env
+.env.*
+*.pem
+*.key
+aws.json
+credentials
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.log
