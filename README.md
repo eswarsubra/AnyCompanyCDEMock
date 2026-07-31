@@ -167,13 +167,77 @@ region: `us-east-1`.
 
 ## Cost estimate
 
-<!-- Populated with concrete figures once the deployed resources are defined
-     (Phase 6/8). -->
+All deployed resources are usage-priced, so cost scales with review volume.
+There are no fixed hourly charges — nothing runs between batches.
 
-The deployed resources are usage-priced (Amazon Translate per character, Amazon
-Bedrock per token, plus S3, Lambda, and API Gateway). For the prototype's batch
-volume the expected cost is low; a per-service breakdown is added once the
-infrastructure is finalized.
+> **Basis and caveat.** The figures below are estimates for `us-east-1`, derived
+> from the assumptions in the next subsection and public list prices at the time
+> of writing. Prices change and vary by region. **Validate against the
+> [AWS Pricing Calculator](https://calculator.aws/) for your account and region
+> before relying on these numbers.** Model token pricing in particular should be
+> reconfirmed, since the model IDs are configurable (see
+> [ADR-0002](docs/adr/0002-model-and-service-selection.md)).
+
+### Assumptions
+
+| Assumption | Value used |
+|---|---|
+| Average review length | ~400 characters (~100 tokens) |
+| Share of reviews needing translation | ~60% (≈40% are already English) |
+| Summarization | all review text read once per batch; short (~60-token) summary per product |
+| Quality scoring | one call per translated review; ~250 input + ~20 output tokens |
+| Translation target languages | 2 (FR, DE) in the prototype |
+| Data retention | input + output kept in S3; volumes are small (KB–MB range) |
+
+Approximate unit prices used (list, `us-east-1`, verify before use): Amazon
+Translate ~$15 / million characters; Bedrock Claude Sonnet ~$3 / M input and
+~$15 / M output tokens; Bedrock Claude Haiku ~$1 / M input and ~$5 / M output
+tokens. S3, Lambda, and API Gateway are within or near their always-free / low
+tiers at these volumes.
+
+### Cost by scale
+
+Three scales, from the current prototype to AnyCompany Apparel's stated full
+volume (~12,000 reviews/week ≈ ~52,000/month):
+
+| Scale | Volume | Est. monthly cost |
+|---|---|---|
+| **Prototype / demo** | ~100 reviews (one-off dev + test runs) | **< $5** |
+| **Pilot** (single market) | ~10,000 reviews / month | **~$40–60** |
+| **Production** (full catalog) | ~52,000 reviews / month | **~$200–250** |
+
+### Per-service breakdown (production scale, ~52,000 reviews/month)
+
+| Service | What drives cost | Est. monthly |
+|---|---|---|
+| Amazon Translate | ~60% of reviews × ~400 chars → ~12.5M chars | ~$185 |
+| Amazon Bedrock — summarization (Sonnet) | ~5.2M input tokens; small output | ~$16 |
+| Amazon Bedrock — quality scoring (Haiku) | ~31k calls × ~250 input tokens | ~$8 |
+| S3 + Lambda + API Gateway | small storage; short, infrequent invocations | < $5 |
+| **Total** | | **~$215** |
+
+Pilot and prototype scales are the same shape with proportionally lower volume;
+translation dominates the bill at every scale.
+
+### Cost trade-offs
+
+The model and service choices (see
+[ADR-0002](docs/adr/0002-model-and-service-selection.md)) are also cost choices:
+
+- **Amazon Translate for translation, not an LLM.** Translation is the largest
+  line item, so it runs on the purpose-built managed service, which is cheaper
+  per unit for straight translation than paying LLM token rates for the same work.
+- **Claude Sonnet for summarization.** Summaries are customer-facing, so quality
+  justifies the higher-tier model. Summarization reads a lot of input but emits
+  little output and runs per product (not per review), keeping its cost modest.
+- **Claude Haiku for quality scoring.** Scoring runs on *every* translated
+  review — the highest-frequency LLM call — so it uses the cheaper "judge" model.
+  Using Sonnet here instead would multiply this line item several-fold for little
+  quality gain on a narrow, structured task.
+
+To lower cost further, the biggest levers are: translating fewer languages,
+raising the quality threshold is *not* a cost lever (scoring still runs), and
+batching/caching translations for duplicate or near-duplicate reviews.
 
 ## Documentation
 
