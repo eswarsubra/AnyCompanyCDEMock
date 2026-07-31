@@ -25,3 +25,8 @@ credentials
 .idea/
 .vscode/
 *.log
+
+# Working / planning notes — generated for our own use, NOT part of the
+# deliverable. Committed docs live in docs/ and README.md; scratch planning,
+# roadmaps, and working write-ups go here and are never committed.
+planning/
