@@ -114,7 +114,9 @@ This is a **prototype**, deliberately bounded:
 - **IaC:** AWS CDK (Python).
 - **AWS account:** a sandbox/prototype account with access to Amazon Translate
   and Amazon Bedrock in `us-east-1`, plus permission to deploy S3, Lambda, and
-  API Gateway.
+  API Gateway. The pipeline is deployed into this **target account**; see
+  [Deployment](#deployment) for the cross-account delivery model used during the
+  prototype engagement.
 - **Bedrock model access:** the configured Claude inference profiles must be
   enabled in the target account/region.
 
@@ -164,6 +166,15 @@ The project uses two complementary layers of testing:
 Infrastructure is defined with AWS CDK (Python) and deploys repeatably into a
 clean AWS account. IAM is scoped least-privilege per Lambda. Target prototype
 region: `us-east-1`.
+
+**Deployment target vs. access model.** The pipeline is deployed into the
+**customer sandbox account**, which owns all runtime resources. During the
+prototype engagement, delivery is performed **cross-account**: the engineer
+operates from a separate delivery account that assumes a role into the customer
+sandbox to run the deployment. The customer's own engineering team can instead
+deploy directly from within their account — the CDK app is not tied to the
+cross-account path. Concrete bootstrap and `cdk deploy` commands are documented
+here when the CDK stacks land (Phase 6).
 
 ## Cost estimate
 
