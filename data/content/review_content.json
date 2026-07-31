@@ -1,0 +1,417 @@
+{
+  "schema_version": "1.0.0",
+  "products": [
+    { "product_id": "prod-101", "product_name": "Alpine Quilted Puffer Jacket" },
+    { "product_id": "prod-102", "product_name": "Coastal Linen Midi Dress" },
+    { "product_id": "prod-103", "product_name": "Heritage Slim-Fit Selvedge Jeans" },
+    { "product_id": "prod-104", "product_name": "Merino Crewneck Knit Sweater" },
+    { "product_id": "prod-105", "product_name": "Trailhead Waterproof Hiking Boots" },
+    { "product_id": "prod-106", "product_name": "Everyday Organic Cotton Tee" },
+    { "product_id": "prod-107", "product_name": "Metro Wool Overcoat" },
+    { "product_id": "prod-108", "product_name": "Studio High-Rise Leggings" },
+    { "product_id": "prod-109", "product_name": "Weekender Canvas Tote Bag" },
+    { "product_id": "prod-110", "product_name": "Cloudstep Cushioned Running Shoes" },
+    { "product_id": "prod-111", "product_name": "Riverside Corduroy Overshirt" },
+    { "product_id": "prod-112", "product_name": "Cashmere-Blend Ribbed Scarf" },
+    { "product_id": "prod-113", "product_name": "Harbor Lightweight Rain Shell" },
+    { "product_id": "prod-114", "product_name": "Sunday Fleece Lounge Joggers" }
+  ],
+  "phrases": {
+    "en": {
+      "titles": {
+        "positive": [
+          "Absolutely love it",
+          "Exceeded my expectations",
+          "Best purchase this year",
+          "Worth every penny",
+          "Instant wardrobe favourite",
+          "Beautifully made",
+          "Exactly what I hoped for",
+          "Can't recommend it enough"
+        ],
+        "neutral": [
+          "Good, but with a few caveats",
+          "Decent for the price",
+          "Nice, though not perfect",
+          "Mixed feelings overall",
+          "It's okay, does the job",
+          "Solid but nothing special",
+          "Fine once you know the sizing"
+        ],
+        "negative": [
+          "Really disappointed",
+          "Not what I expected at all",
+          "Would not buy again",
+          "Fell apart far too quickly",
+          "Save your money",
+          "Poor quality, sadly",
+          "Nothing like the photos"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "The {product} fits perfectly and feels wonderfully soft against the skin.",
+          "I've worn the {product} almost every day and it still looks brand new.",
+          "The quality of the {product} is outstanding and the stitching is flawless.",
+          "Shipping was fast and the {product} arrived beautifully packaged.",
+          "The colour is exactly as pictured and the fabric feels premium.",
+          "So comfortable I forget I'm wearing it, and it washes without any fading.",
+          "The {product} is versatile enough to dress up or down for any occasion.",
+          "Great value for the money and clearly built to last.",
+          "I get compliments every single time I wear the {product}.",
+          "True to size and the finish is even nicer in person."
+        ],
+        "neutral": [
+          "The {product} is comfortable, but the colour is slightly duller than the photos.",
+          "It does the job, though I expected the fabric to feel a bit thicker.",
+          "The fit is fine, but you may want to size up if you're between sizes.",
+          "Decent quality overall, yet the price feels a touch high for what it is.",
+          "The {product} looks good, but it wrinkles more easily than I'd like.",
+          "It's a reasonable buy; nothing stood out as either great or poor.",
+          "The material is okay, though the stitching could be a little neater.",
+          "Fine for everyday use, but I wouldn't call it special."
+        ],
+        "negative": [
+          "The {product} started falling apart after only a couple of washes.",
+          "The sizing runs completely off and it's far smaller than described.",
+          "The fabric feels cheap and thin, nothing like the photos suggested.",
+          "A seam came undone within the first week of wearing it.",
+          "The colour faded badly after a single wash, which was very disappointing.",
+          "For this price I expected much better quality from the {product}.",
+          "It arrived with a noticeable flaw and returning it was a hassle.",
+          "The {product} is uncomfortable and I've barely worn it since."
+        ]
+      }
+    },
+    "fr": {
+      "titles": {
+        "positive": [
+          "Je l'adore tout simplement",
+          "Bien au-delà de mes attentes",
+          "Mon meilleur achat de l'année",
+          "Vaut vraiment son prix",
+          "Devenu mon indispensable",
+          "Superbe qualité de fabrication",
+          "Exactement ce que j'espérais",
+          "Je le recommande vivement"
+        ],
+        "neutral": [
+          "Correct, mais quelques réserves",
+          "Convenable pour le prix",
+          "Bien, sans être parfait",
+          "Sentiments partagés",
+          "Ça fait le travail, sans plus",
+          "Correct mais rien d'exceptionnel",
+          "Bien une fois la taille comprise"
+        ],
+        "negative": [
+          "Vraiment déçu",
+          "Pas du tout ce que j'attendais",
+          "Je ne rachèterai pas",
+          "S'est abîmé bien trop vite",
+          "Épargnez votre argent",
+          "Mauvaise qualité, hélas",
+          "Rien à voir avec les photos"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "Le {product} taille parfaitement et il est incroyablement doux au toucher.",
+          "Je porte le {product} presque tous les jours et il paraît toujours neuf.",
+          "La qualité du {product} est remarquable et les coutures sont impeccables.",
+          "La livraison a été rapide et l'article est arrivé très bien emballé.",
+          "La couleur correspond exactement à la photo et le tissu semble haut de gamme.",
+          "Il est si confortable que j'oublie que je le porte, et il ne déteint pas au lavage.",
+          "Le {product} est assez polyvalent pour toutes les occasions, habillé ou décontracté.",
+          "Un excellent rapport qualité-prix, manifestement conçu pour durer.",
+          "On me complimente à chaque fois que je porte le {product}.",
+          "Conforme à la taille annoncée et encore plus beau en vrai."
+        ],
+        "neutral": [
+          "Le {product} est confortable, mais la couleur est un peu plus terne que sur les photos.",
+          "Il fait l'affaire, même si j'espérais un tissu un peu plus épais.",
+          "La coupe est correcte, mais prenez une taille au-dessus si vous hésitez.",
+          "Qualité correcte dans l'ensemble, mais le prix me semble un peu élevé.",
+          "Le {product} est joli, mais il se froisse plus facilement que je ne le voudrais.",
+          "C'est un achat raisonnable ; rien de particulièrement bon ni mauvais.",
+          "La matière est acceptable, même si les finitions pourraient être plus soignées.",
+          "Convenable pour tous les jours, mais je ne dirais pas qu'il est exceptionnel."
+        ],
+        "negative": [
+          "Le {product} a commencé à s'abîmer après seulement quelques lavages.",
+          "La taille est complètement fausse : c'est bien plus petit que décrit.",
+          "Le tissu paraît bon marché et fin, rien à voir avec les photos.",
+          "Une couture a lâché dès la première semaine.",
+          "La couleur a beaucoup déteint après un seul lavage, très décevant.",
+          "Pour ce prix, j'attendais une bien meilleure qualité du {product}.",
+          "Il est arrivé avec un défaut visible et le retour a été compliqué.",
+          "Le {product} est inconfortable et je ne l'ai presque pas porté depuis."
+        ]
+      }
+    },
+    "de": {
+      "titles": {
+        "positive": [
+          "Ich liebe es einfach",
+          "Hat meine Erwartungen übertroffen",
+          "Bester Kauf des Jahres",
+          "Jeden Cent wert",
+          "Sofort mein Lieblingsstück",
+          "Wunderschön verarbeitet",
+          "Genau das, was ich wollte",
+          "Kann ich nur empfehlen"
+        ],
+        "neutral": [
+          "Gut, aber mit Einschränkungen",
+          "Ordentlich für den Preis",
+          "Schön, aber nicht perfekt",
+          "Gemischte Gefühle",
+          "Erfüllt seinen Zweck, mehr nicht",
+          "Solide, aber nichts Besonderes",
+          "In Ordnung, wenn man die Größe kennt"
+        ],
+        "negative": [
+          "Wirklich enttäuscht",
+          "Ganz und gar nicht wie erwartet",
+          "Würde ich nicht wieder kaufen",
+          "Viel zu schnell kaputtgegangen",
+          "Spart euch das Geld",
+          "Leider schlechte Qualität",
+          "Sieht ganz anders aus als die Fotos"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "Der {product} passt perfekt und fühlt sich herrlich weich auf der Haut an.",
+          "Ich trage den {product} fast jeden Tag und er sieht immer noch wie neu aus.",
+          "Die Qualität des {product} ist hervorragend und die Nähte sind tadellos.",
+          "Der Versand war schnell und der Artikel kam wunderbar verpackt an.",
+          "Die Farbe entspricht genau dem Foto und der Stoff wirkt sehr hochwertig.",
+          "So bequem, dass ich vergesse, dass ich ihn trage, und er verblasst beim Waschen nicht.",
+          "Der {product} lässt sich vielseitig kombinieren, ob elegant oder leger.",
+          "Ein hervorragendes Preis-Leistungs-Verhältnis und sichtlich langlebig verarbeitet.",
+          "Ich bekomme jedes Mal Komplimente, wenn ich den {product} trage.",
+          "Größengetreu und in echt sogar noch schöner."
+        ],
+        "neutral": [
+          "Der {product} ist bequem, aber die Farbe ist etwas blasser als auf den Fotos.",
+          "Er erfüllt seinen Zweck, obwohl ich den Stoff etwas dicker erwartet hätte.",
+          "Die Passform ist in Ordnung, aber bei Zwischengrößen sollte man größer wählen.",
+          "Insgesamt ordentliche Qualität, doch der Preis erscheint mir etwas hoch.",
+          "Der {product} sieht gut aus, knittert aber leichter, als mir lieb ist.",
+          "Ein vernünftiger Kauf; nichts war besonders gut oder besonders schlecht.",
+          "Das Material ist okay, auch wenn die Verarbeitung sauberer sein könnte.",
+          "Für den Alltag brauchbar, aber ich würde es nicht als besonders bezeichnen."
+        ],
+        "negative": [
+          "Der {product} fiel schon nach ein paar Wäschen auseinander.",
+          "Die Größe stimmt überhaupt nicht, er fällt viel kleiner aus als beschrieben.",
+          "Der Stoff fühlt sich billig und dünn an, ganz anders als auf den Fotos.",
+          "Schon in der ersten Woche ist eine Naht aufgegangen.",
+          "Die Farbe ist nach nur einer Wäsche stark verblasst, sehr enttäuschend.",
+          "Für diesen Preis hätte ich vom {product} viel mehr Qualität erwartet.",
+          "Er kam mit einem sichtbaren Mangel an und die Rücksendung war mühsam.",
+          "Der {product} ist unbequem und ich habe ihn seitdem kaum getragen."
+        ]
+      }
+    },
+    "es": {
+      "titles": {
+        "positive": [
+          "Me encanta sin más",
+          "Superó mis expectativas",
+          "La mejor compra del año",
+          "Vale cada céntimo",
+          "Ya es mi prenda favorita",
+          "Preciosa confección",
+          "Justo lo que esperaba",
+          "Lo recomiendo muchísimo"
+        ],
+        "neutral": [
+          "Bien, pero con algún pero",
+          "Correcto para el precio",
+          "Bonito, aunque no perfecto",
+          "Sentimientos encontrados",
+          "Cumple su función, sin más",
+          "Sólido pero nada del otro mundo",
+          "Bien una vez aciertas con la talla"
+        ],
+        "negative": [
+          "Muy decepcionado",
+          "No es en absoluto lo que esperaba",
+          "No volvería a comprarlo",
+          "Se estropeó demasiado rápido",
+          "Ahórrate el dinero",
+          "Mala calidad, por desgracia",
+          "No se parece a las fotos"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "El {product} queda perfecto y es maravillosamente suave al tacto.",
+          "Llevo el {product} casi todos los días y sigue pareciendo nuevo.",
+          "La calidad del {product} es excelente y las costuras son impecables.",
+          "El envío fue rápido y llegó estupendamente embalado.",
+          "El color es idéntico al de la foto y la tela parece de gama alta.",
+          "Es tan cómodo que olvido que lo llevo puesto, y no destiñe al lavarlo.",
+          "El {product} es muy versátil, sirve tanto para arreglarse como para el día a día.",
+          "Una excelente relación calidad-precio y se nota que está hecho para durar.",
+          "Me hacen cumplidos cada vez que llevo el {product}.",
+          "Fiel a la talla y aún más bonito en persona."
+        ],
+        "neutral": [
+          "El {product} es cómodo, pero el color es algo más apagado que en las fotos.",
+          "Cumple, aunque esperaba que la tela fuera un poco más gruesa.",
+          "El corte está bien, pero conviene pedir una talla más si dudas.",
+          "Calidad correcta en general, aunque el precio me parece algo alto.",
+          "El {product} se ve bien, pero se arruga más de lo que me gustaría.",
+          "Es una compra razonable; nada destacó ni para bien ni para mal.",
+          "El material es aceptable, aunque los acabados podrían estar más cuidados.",
+          "Sirve para el día a día, pero no diría que es especial."
+        ],
+        "negative": [
+          "El {product} empezó a estropearse tras solo un par de lavados.",
+          "La talla está totalmente equivocada, es mucho más pequeño de lo descrito.",
+          "La tela parece barata y fina, nada que ver con las fotos.",
+          "Una costura se descosió durante la primera semana de uso.",
+          "El color destiñó muchísimo tras un solo lavado, muy decepcionante.",
+          "Por este precio esperaba mucha más calidad del {product}.",
+          "Llegó con un defecto evidente y devolverlo fue un engorro.",
+          "El {product} es incómodo y apenas me lo he puesto desde entonces."
+        ]
+      }
+    },
+    "it": {
+      "titles": {
+        "positive": [
+          "Lo adoro e basta",
+          "Ha superato le aspettative",
+          "Il miglior acquisto dell'anno",
+          "Vale ogni centesimo",
+          "Già il mio capo preferito",
+          "Fattura splendida",
+          "Esattamente ciò che speravo",
+          "Lo consiglio vivamente"
+        ],
+        "neutral": [
+          "Bene, ma con qualche riserva",
+          "Discreto per il prezzo",
+          "Carino, anche se non perfetto",
+          "Sentimenti contrastanti",
+          "Fa il suo dovere, niente di più",
+          "Solido ma nulla di speciale",
+          "Va bene una volta capita la taglia"
+        ],
+        "negative": [
+          "Davvero deluso",
+          "Non è affatto ciò che mi aspettavo",
+          "Non lo ricomprerei",
+          "Si è rovinato troppo in fretta",
+          "Risparmiate i vostri soldi",
+          "Qualità scadente, purtroppo",
+          "Niente a che vedere con le foto"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "Il {product} veste alla perfezione ed è meravigliosamente morbido sulla pelle.",
+          "Indosso il {product} quasi ogni giorno e sembra ancora nuovo.",
+          "La qualità del {product} è eccellente e le cuciture sono impeccabili.",
+          "La spedizione è stata veloce e l'articolo è arrivato imballato benissimo.",
+          "Il colore è identico a quello della foto e il tessuto sembra di alta qualità.",
+          "È così comodo che dimentico di indossarlo, e non stinge al lavaggio.",
+          "Il {product} è molto versatile, adatto sia a un look elegante che casual.",
+          "Un ottimo rapporto qualità-prezzo e si vede che è fatto per durare.",
+          "Ricevo complimenti ogni volta che indosso il {product}.",
+          "Fedele alla taglia e ancora più bello dal vivo."
+        ],
+        "neutral": [
+          "Il {product} è comodo, ma il colore è un po' più spento rispetto alle foto.",
+          "Fa il suo dovere, anche se speravo in un tessuto un po' più spesso.",
+          "La vestibilità è buona, ma conviene prendere una taglia in più se si è indecisi.",
+          "Qualità nel complesso discreta, ma il prezzo mi sembra un po' alto.",
+          "Il {product} è carino, ma si sgualcisce più facilmente di quanto vorrei.",
+          "È un acquisto ragionevole; niente di particolarmente buono o cattivo.",
+          "Il materiale è accettabile, anche se le finiture potrebbero essere più curate.",
+          "Va bene per tutti i giorni, ma non lo definirei speciale."
+        ],
+        "negative": [
+          "Il {product} ha iniziato a rovinarsi dopo appena un paio di lavaggi.",
+          "La taglia è completamente sbagliata, è molto più piccolo del descritto.",
+          "Il tessuto sembra scadente e sottile, niente a che vedere con le foto.",
+          "Una cucitura si è scucita già nella prima settimana.",
+          "Il colore è stinto moltissimo dopo un solo lavaggio, davvero deludente.",
+          "Per questo prezzo mi aspettavo una qualità ben migliore dal {product}.",
+          "È arrivato con un difetto evidente e il reso è stato una seccatura.",
+          "Il {product} è scomodo e da allora non l'ho quasi più indossato."
+        ]
+      }
+    },
+    "pt": {
+      "titles": {
+        "positive": [
+          "Simplesmente adoro",
+          "Superou as minhas expetativas",
+          "A melhor compra do ano",
+          "Vale cada cêntimo",
+          "Já é a minha peça favorita",
+          "Confeção impecável",
+          "Exatamente o que eu esperava",
+          "Recomendo vivamente"
+        ],
+        "neutral": [
+          "Bom, mas com algumas ressalvas",
+          "Razoável pelo preço",
+          "Bonito, embora não perfeito",
+          "Sentimentos contraditórios",
+          "Cumpre a função, nada mais",
+          "Sólido mas nada de especial",
+          "Bom depois de acertar no tamanho"
+        ],
+        "negative": [
+          "Muito desiludido",
+          "Não é nada do que eu esperava",
+          "Não voltaria a comprar",
+          "Estragou-se depressa demais",
+          "Poupem o vosso dinheiro",
+          "Fraca qualidade, infelizmente",
+          "Nada a ver com as fotografias"
+        ]
+      },
+      "sentences": {
+        "positive": [
+          "O {product} assenta na perfeição e é maravilhosamente suave ao toque.",
+          "Uso o {product} quase todos os dias e continua a parecer novo.",
+          "A qualidade do {product} é excelente e as costuras são impecáveis.",
+          "O envio foi rápido e o artigo chegou muito bem embalado.",
+          "A cor é igual à da fotografia e o tecido parece de gama alta.",
+          "É tão confortável que me esqueço de que o trago vestido, e não desbota na lavagem.",
+          "O {product} é muito versátil, serve tanto para ocasiões formais como para o dia a dia.",
+          "Uma excelente relação qualidade-preço e nota-se que foi feito para durar.",
+          "Recebo elogios sempre que uso o {product}.",
+          "Fiel ao tamanho e ainda mais bonito ao vivo."
+        ],
+        "neutral": [
+          "O {product} é confortável, mas a cor é um pouco mais apagada do que nas fotografias.",
+          "Cumpre, embora eu esperasse um tecido um pouco mais grosso.",
+          "O corte está bem, mas convém pedir um tamanho acima se estiver em dúvida.",
+          "Qualidade razoável no geral, mas o preço parece-me um pouco elevado.",
+          "O {product} é bonito, mas amarrota mais facilmente do que eu gostaria.",
+          "É uma compra sensata; nada se destacou nem pela positiva nem pela negativa.",
+          "O material é aceitável, embora os acabamentos pudessem ser mais cuidados.",
+          "Serve para o dia a dia, mas não diria que é especial."
+        ],
+        "negative": [
+          "O {product} começou a estragar-se ao fim de apenas algumas lavagens.",
+          "O tamanho está completamente errado, é muito mais pequeno do que o descrito.",
+          "O tecido parece barato e fino, nada a ver com as fotografias.",
+          "Uma costura descoseu-se logo na primeira semana de uso.",
+          "A cor desbotou imenso após uma única lavagem, muito dececionante.",
+          "Por este preço esperava muito mais qualidade do {product}.",
+          "Chegou com um defeito evidente e a devolução foi um transtorno.",
+          "O {product} é desconfortável e desde então quase não o usei."
+        ]
+      }
+    }
+  }
+}
