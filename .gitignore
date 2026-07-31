@@ -20,11 +20,16 @@ cdk.out/
 aws.json
 credentials
 
-# Editor / OS
+# Editor / OS / local tooling
 .DS_Store
 .idea/
 .vscode/
 *.log
+.claude/
+
+# Security scan output — evidence is attached to SIM, not committed
+.ash/
+.protoshield/
 
 # Working / planning notes — generated for our own use, NOT part of the
 # deliverable. Committed docs live in docs/ and README.md; scratch planning,
