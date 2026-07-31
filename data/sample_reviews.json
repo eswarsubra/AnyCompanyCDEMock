@@ -1,0 +1,906 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-31T00:00:00Z",
+  "reviews": [
+    {
+      "review_id": "rev-0001",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "en",
+      "rating": 1,
+      "title": "Poor quality, sadly",
+      "body": "The fabric feels cheap and thin, nothing like the photos suggested. It arrived with a noticeable flaw and returning it was a hassle."
+    },
+    {
+      "review_id": "rev-0002",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Beautifully made",
+      "body": "The Sunday Fleece Lounge Joggers is versatile enough to dress up or down for any occasion. Shipping was fast and the Sunday Fleece Lounge Joggers arrived beautifully packaged."
+    },
+    {
+      "review_id": "rev-0003",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Nice, though not perfect",
+      "body": "The material is okay, though the stitching could be a little neater."
+    },
+    {
+      "review_id": "rev-0004",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Good, but with a few caveats",
+      "body": "It's a reasonable buy; nothing stood out as either great or poor. Decent quality overall, yet the price feels a touch high for what it is. The material is okay, though the stitching could be a little neater."
+    },
+    {
+      "review_id": "rev-0005",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Nice, though not perfect",
+      "body": "The Harbor Lightweight Rain Shell is comfortable, but the colour is slightly duller than the photos. The material is okay, though the stitching could be a little neater. The fit is fine, but you may want to size up if you're between sizes."
+    },
+    {
+      "review_id": "rev-0006",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Worth every penny",
+      "body": "So comfortable I forget I'm wearing it, and it washes without any fading."
+    },
+    {
+      "review_id": "rev-0007",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "en",
+      "rating": 3,
+      "title": "It's okay, does the job",
+      "body": "The Riverside Corduroy Overshirt looks good, but it wrinkles more easily than I'd like. The material is okay, though the stitching could be a little neater."
+    },
+    {
+      "review_id": "rev-0008",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Absolutely love it",
+      "body": "The Merino Crewneck Knit Sweater is versatile enough to dress up or down for any occasion."
+    },
+    {
+      "review_id": "rev-0009",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "en",
+      "rating": 1,
+      "title": "Really disappointed",
+      "body": "The Riverside Corduroy Overshirt started falling apart after only a couple of washes. For this price I expected much better quality from the Riverside Corduroy Overshirt. The sizing runs completely off and it's far smaller than described."
+    },
+    {
+      "review_id": "rev-0010",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Worth every penny",
+      "body": "True to size and the finish is even nicer in person. So comfortable I forget I'm wearing it, and it washes without any fading."
+    },
+    {
+      "review_id": "rev-0011",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "en",
+      "rating": 2,
+      "title": "Save your money",
+      "body": "It arrived with a noticeable flaw and returning it was a hassle. The colour faded badly after a single wash, which was very disappointing."
+    },
+    {
+      "review_id": "rev-0012",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Absolutely love it",
+      "body": "The colour is exactly as pictured and the fabric feels premium. Shipping was fast and the Harbor Lightweight Rain Shell arrived beautifully packaged. The quality of the Harbor Lightweight Rain Shell is outstanding and the stitching is flawless."
+    },
+    {
+      "review_id": "rev-0013",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Best purchase this year",
+      "body": "The Weekender Canvas Tote Bag fits perfectly and feels wonderfully soft against the skin. Great value for the money and clearly built to last. I get compliments every single time I wear the Weekender Canvas Tote Bag."
+    },
+    {
+      "review_id": "rev-0014",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "en",
+      "rating": 2,
+      "title": "Fell apart far too quickly",
+      "body": "For this price I expected much better quality from the Alpine Quilted Puffer Jacket. The Alpine Quilted Puffer Jacket is uncomfortable and I've barely worn it since. The colour faded badly after a single wash, which was very disappointing."
+    },
+    {
+      "review_id": "rev-0015",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Instant wardrobe favourite",
+      "body": "I've worn the Harbor Lightweight Rain Shell almost every day and it still looks brand new. The quality of the Harbor Lightweight Rain Shell is outstanding and the stitching is flawless."
+    },
+    {
+      "review_id": "rev-0016",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "en",
+      "rating": 1,
+      "title": "Would not buy again",
+      "body": "A seam came undone within the first week of wearing it."
+    },
+    {
+      "review_id": "rev-0017",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "en",
+      "rating": 1,
+      "title": "Nothing like the photos",
+      "body": "The Studio High-Rise Leggings started falling apart after only a couple of washes. The colour faded badly after a single wash, which was very disappointing."
+    },
+    {
+      "review_id": "rev-0018",
+      "product_id": "prod-103",
+      "product_name": "Heritage Slim-Fit Selvedge Jeans",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Absolutely love it",
+      "body": "The colour is exactly as pictured and the fabric feels premium. The quality of the Heritage Slim-Fit Selvedge Jeans is outstanding and the stitching is flawless."
+    },
+    {
+      "review_id": "rev-0019",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Nice, though not perfect",
+      "body": "It does the job, though I expected the fabric to feel a bit thicker. Fine for everyday use, but I wouldn't call it special."
+    },
+    {
+      "review_id": "rev-0020",
+      "product_id": "prod-106",
+      "product_name": "Everyday Organic Cotton Tee",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Solid but nothing special",
+      "body": "The Everyday Organic Cotton Tee looks good, but it wrinkles more easily than I'd like. It's a reasonable buy; nothing stood out as either great or poor. It does the job, though I expected the fabric to feel a bit thicker."
+    },
+    {
+      "review_id": "rev-0021",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Exactly what I hoped for",
+      "body": "The Merino Crewneck Knit Sweater is versatile enough to dress up or down for any occasion. I get compliments every single time I wear the Merino Crewneck Knit Sweater. The colour is exactly as pictured and the fabric feels premium."
+    },
+    {
+      "review_id": "rev-0022",
+      "product_id": "prod-103",
+      "product_name": "Heritage Slim-Fit Selvedge Jeans",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Beautifully made",
+      "body": "True to size and the finish is even nicer in person. Shipping was fast and the Heritage Slim-Fit Selvedge Jeans arrived beautifully packaged."
+    },
+    {
+      "review_id": "rev-0023",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 2,
+      "title": "Save your money",
+      "body": "The fabric feels cheap and thin, nothing like the photos suggested. For this price I expected much better quality from the Harbor Lightweight Rain Shell."
+    },
+    {
+      "review_id": "rev-0024",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Solid but nothing special",
+      "body": "The Studio High-Rise Leggings is comfortable, but the colour is slightly duller than the photos. Fine for everyday use, but I wouldn't call it special."
+    },
+    {
+      "review_id": "rev-0025",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Exactly what I hoped for",
+      "body": "I get compliments every single time I wear the Weekender Canvas Tote Bag. So comfortable I forget I'm wearing it, and it washes without any fading."
+    },
+    {
+      "review_id": "rev-0026",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Beautifully made",
+      "body": "The colour is exactly as pictured and the fabric feels premium."
+    },
+    {
+      "review_id": "rev-0027",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Exactly what I hoped for",
+      "body": "True to size and the finish is even nicer in person."
+    },
+    {
+      "review_id": "rev-0028",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Worth every penny",
+      "body": "I've worn the Sunday Fleece Lounge Joggers almost every day and it still looks brand new. Great value for the money and clearly built to last."
+    },
+    {
+      "review_id": "rev-0029",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Exceeded my expectations",
+      "body": "Great value for the money and clearly built to last. I get compliments every single time I wear the Cashmere-Blend Ribbed Scarf."
+    },
+    {
+      "review_id": "rev-0030",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Exactly what I hoped for",
+      "body": "The Sunday Fleece Lounge Joggers fits perfectly and feels wonderfully soft against the skin."
+    },
+    {
+      "review_id": "rev-0031",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "en",
+      "rating": 1,
+      "title": "Save your money",
+      "body": "A seam came undone within the first week of wearing it. For this price I expected much better quality from the Sunday Fleece Lounge Joggers."
+    },
+    {
+      "review_id": "rev-0032",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "en",
+      "rating": 5,
+      "title": "Worth every penny",
+      "body": "The Studio High-Rise Leggings fits perfectly and feels wonderfully soft against the skin. Great value for the money and clearly built to last."
+    },
+    {
+      "review_id": "rev-0033",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Nice, though not perfect",
+      "body": "It's a reasonable buy; nothing stood out as either great or poor. The fit is fine, but you may want to size up if you're between sizes. The Harbor Lightweight Rain Shell looks good, but it wrinkles more easily than I'd like."
+    },
+    {
+      "review_id": "rev-0034",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Solid but nothing special",
+      "body": "The Coastal Linen Midi Dress is comfortable, but the colour is slightly duller than the photos."
+    },
+    {
+      "review_id": "rev-0035",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Instant wardrobe favourite",
+      "body": "The quality of the Riverside Corduroy Overshirt is outstanding and the stitching is flawless."
+    },
+    {
+      "review_id": "rev-0036",
+      "product_id": "prod-103",
+      "product_name": "Heritage Slim-Fit Selvedge Jeans",
+      "source_language": "en",
+      "rating": 4,
+      "title": "Exceeded my expectations",
+      "body": "True to size and the finish is even nicer in person. Great value for the money and clearly built to last. I get compliments every single time I wear the Heritage Slim-Fit Selvedge Jeans."
+    },
+    {
+      "review_id": "rev-0037",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Decent for the price",
+      "body": "The fit is fine, but you may want to size up if you're between sizes."
+    },
+    {
+      "review_id": "rev-0038",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "en",
+      "rating": 2,
+      "title": "Poor quality, sadly",
+      "body": "The Merino Crewneck Knit Sweater is uncomfortable and I've barely worn it since."
+    },
+    {
+      "review_id": "rev-0039",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Mixed feelings overall",
+      "body": "The Studio High-Rise Leggings looks good, but it wrinkles more easily than I'd like. The material is okay, though the stitching could be a little neater. The fit is fine, but you may want to size up if you're between sizes."
+    },
+    {
+      "review_id": "rev-0040",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "en",
+      "rating": 3,
+      "title": "Nice, though not perfect",
+      "body": "It does the job, though I expected the fabric to feel a bit thicker. The material is okay, though the stitching could be a little neater. Fine for everyday use, but I wouldn't call it special."
+    },
+    {
+      "review_id": "rev-0041",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "fr",
+      "rating": 3,
+      "title": "Bien, sans être parfait",
+      "body": "Qualité correcte dans l'ensemble, mais le prix me semble un peu élevé. Il fait l'affaire, même si j'espérais un tissu un peu plus épais. C'est un achat raisonnable ; rien de particulièrement bon ni mauvais."
+    },
+    {
+      "review_id": "rev-0042",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "fr",
+      "rating": 5,
+      "title": "Mon meilleur achat de l'année",
+      "body": "Le Merino Crewneck Knit Sweater est assez polyvalent pour toutes les occasions, habillé ou décontracté. La livraison a été rapide et l'article est arrivé très bien emballé. Le Merino Crewneck Knit Sweater taille parfaitement et il est incroyablement doux au toucher."
+    },
+    {
+      "review_id": "rev-0043",
+      "product_id": "prod-107",
+      "product_name": "Metro Wool Overcoat",
+      "source_language": "fr",
+      "rating": 5,
+      "title": "Exactement ce que j'espérais",
+      "body": "On me complimente à chaque fois que je porte le Metro Wool Overcoat. Un excellent rapport qualité-prix, manifestement conçu pour durer."
+    },
+    {
+      "review_id": "rev-0044",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "fr",
+      "rating": 3,
+      "title": "Correct, mais quelques réserves",
+      "body": "Il fait l'affaire, même si j'espérais un tissu un peu plus épais."
+    },
+    {
+      "review_id": "rev-0045",
+      "product_id": "prod-114",
+      "product_name": "Sunday Fleece Lounge Joggers",
+      "source_language": "fr",
+      "rating": 3,
+      "title": "Convenable pour le prix",
+      "body": "Le Sunday Fleece Lounge Joggers est joli, mais il se froisse plus facilement que je ne le voudrais. Convenable pour tous les jours, mais je ne dirais pas qu'il est exceptionnel."
+    },
+    {
+      "review_id": "rev-0046",
+      "product_id": "prod-107",
+      "product_name": "Metro Wool Overcoat",
+      "source_language": "fr",
+      "rating": 5,
+      "title": "Vaut vraiment son prix",
+      "body": "On me complimente à chaque fois que je porte le Metro Wool Overcoat."
+    },
+    {
+      "review_id": "rev-0047",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "fr",
+      "rating": 1,
+      "title": "Rien à voir avec les photos",
+      "body": "Il est arrivé avec un défaut visible et le retour a été compliqué. Le tissu paraît bon marché et fin, rien à voir avec les photos. La couleur a beaucoup déteint après un seul lavage, très décevant."
+    },
+    {
+      "review_id": "rev-0048",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "fr",
+      "rating": 1,
+      "title": "Pas du tout ce que j'attendais",
+      "body": "Le Weekender Canvas Tote Bag a commencé à s'abîmer après seulement quelques lavages. Il est arrivé avec un défaut visible et le retour a été compliqué. Une couture a lâché dès la première semaine."
+    },
+    {
+      "review_id": "rev-0049",
+      "product_id": "prod-105",
+      "product_name": "Trailhead Waterproof Hiking Boots",
+      "source_language": "fr",
+      "rating": 4,
+      "title": "Je l'adore tout simplement",
+      "body": "Il est si confortable que j'oublie que je le porte, et il ne déteint pas au lavage. Le Trailhead Waterproof Hiking Boots taille parfaitement et il est incroyablement doux au toucher. On me complimente à chaque fois que je porte le Trailhead Waterproof Hiking Boots."
+    },
+    {
+      "review_id": "rev-0050",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "fr",
+      "rating": 2,
+      "title": "Vraiment déçu",
+      "body": "Il est arrivé avec un défaut visible et le retour a été compliqué. La couleur a beaucoup déteint après un seul lavage, très décevant."
+    },
+    {
+      "review_id": "rev-0051",
+      "product_id": "prod-107",
+      "product_name": "Metro Wool Overcoat",
+      "source_language": "fr",
+      "rating": 4,
+      "title": "Mon meilleur achat de l'année",
+      "body": "Un excellent rapport qualité-prix, manifestement conçu pour durer."
+    },
+    {
+      "review_id": "rev-0052",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "fr",
+      "rating": 2,
+      "title": "Pas du tout ce que j'attendais",
+      "body": "Il est arrivé avec un défaut visible et le retour a été compliqué."
+    },
+    {
+      "review_id": "rev-0053",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "fr",
+      "rating": 5,
+      "title": "Mon meilleur achat de l'année",
+      "body": "La livraison a été rapide et l'article est arrivé très bien emballé. Je porte le Merino Crewneck Knit Sweater presque tous les jours et il paraît toujours neuf."
+    },
+    {
+      "review_id": "rev-0054",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "fr",
+      "rating": 4,
+      "title": "Exactement ce que j'espérais",
+      "body": "Le Merino Crewneck Knit Sweater est assez polyvalent pour toutes les occasions, habillé ou décontracté."
+    },
+    {
+      "review_id": "rev-0055",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "fr",
+      "rating": 4,
+      "title": "Devenu mon indispensable",
+      "body": "Il est si confortable que j'oublie que je le porte, et il ne déteint pas au lavage."
+    },
+    {
+      "review_id": "rev-0056",
+      "product_id": "prod-105",
+      "product_name": "Trailhead Waterproof Hiking Boots",
+      "source_language": "de",
+      "rating": 5,
+      "title": "Kann ich nur empfehlen",
+      "body": "So bequem, dass ich vergesse, dass ich ihn trage, und er verblasst beim Waschen nicht. Der Trailhead Waterproof Hiking Boots passt perfekt und fühlt sich herrlich weich auf der Haut an."
+    },
+    {
+      "review_id": "rev-0057",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "de",
+      "rating": 4,
+      "title": "Wunderschön verarbeitet",
+      "body": "Der Versand war schnell und der Artikel kam wunderbar verpackt an. Ich trage den Harbor Lightweight Rain Shell fast jeden Tag und er sieht immer noch wie neu aus. Der Harbor Lightweight Rain Shell passt perfekt und fühlt sich herrlich weich auf der Haut an."
+    },
+    {
+      "review_id": "rev-0058",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "de",
+      "rating": 1,
+      "title": "Viel zu schnell kaputtgegangen",
+      "body": "Er kam mit einem sichtbaren Mangel an und die Rücksendung war mühsam. Der Cashmere-Blend Ribbed Scarf fiel schon nach ein paar Wäschen auseinander. Schon in der ersten Woche ist eine Naht aufgegangen."
+    },
+    {
+      "review_id": "rev-0059",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "de",
+      "rating": 1,
+      "title": "Wirklich enttäuscht",
+      "body": "Er kam mit einem sichtbaren Mangel an und die Rücksendung war mühsam. Für diesen Preis hätte ich vom Alpine Quilted Puffer Jacket viel mehr Qualität erwartet. Schon in der ersten Woche ist eine Naht aufgegangen."
+    },
+    {
+      "review_id": "rev-0060",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "de",
+      "rating": 1,
+      "title": "Spart euch das Geld",
+      "body": "Der Coastal Linen Midi Dress ist unbequem und ich habe ihn seitdem kaum getragen. Die Farbe ist nach nur einer Wäsche stark verblasst, sehr enttäuschend. Er kam mit einem sichtbaren Mangel an und die Rücksendung war mühsam."
+    },
+    {
+      "review_id": "rev-0061",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "de",
+      "rating": 5,
+      "title": "Wunderschön verarbeitet",
+      "body": "So bequem, dass ich vergesse, dass ich ihn trage, und er verblasst beim Waschen nicht. Der Merino Crewneck Knit Sweater passt perfekt und fühlt sich herrlich weich auf der Haut an. Die Qualität des Merino Crewneck Knit Sweater ist hervorragend und die Nähte sind tadellos."
+    },
+    {
+      "review_id": "rev-0062",
+      "product_id": "prod-103",
+      "product_name": "Heritage Slim-Fit Selvedge Jeans",
+      "source_language": "de",
+      "rating": 5,
+      "title": "Genau das, was ich wollte",
+      "body": "Die Qualität des Heritage Slim-Fit Selvedge Jeans ist hervorragend und die Nähte sind tadellos."
+    },
+    {
+      "review_id": "rev-0063",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "de",
+      "rating": 3,
+      "title": "Schön, aber nicht perfekt",
+      "body": "Für den Alltag brauchbar, aber ich würde es nicht als besonders bezeichnen. Die Passform ist in Ordnung, aber bei Zwischengrößen sollte man größer wählen."
+    },
+    {
+      "review_id": "rev-0064",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "de",
+      "rating": 4,
+      "title": "Jeden Cent wert",
+      "body": "Größengetreu und in echt sogar noch schöner."
+    },
+    {
+      "review_id": "rev-0065",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "de",
+      "rating": 5,
+      "title": "Hat meine Erwartungen übertroffen",
+      "body": "Die Farbe entspricht genau dem Foto und der Stoff wirkt sehr hochwertig. Ein hervorragendes Preis-Leistungs-Verhältnis und sichtlich langlebig verarbeitet. Größengetreu und in echt sogar noch schöner."
+    },
+    {
+      "review_id": "rev-0066",
+      "product_id": "prod-103",
+      "product_name": "Heritage Slim-Fit Selvedge Jeans",
+      "source_language": "de",
+      "rating": 3,
+      "title": "In Ordnung, wenn man die Größe kennt",
+      "body": "Die Passform ist in Ordnung, aber bei Zwischengrößen sollte man größer wählen."
+    },
+    {
+      "review_id": "rev-0067",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "de",
+      "rating": 3,
+      "title": "Ordentlich für den Preis",
+      "body": "Der Cashmere-Blend Ribbed Scarf ist bequem, aber die Farbe ist etwas blasser als auf den Fotos."
+    },
+    {
+      "review_id": "rev-0068",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "de",
+      "rating": 5,
+      "title": "Wunderschön verarbeitet",
+      "body": "Die Farbe entspricht genau dem Foto und der Stoff wirkt sehr hochwertig."
+    },
+    {
+      "review_id": "rev-0069",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "de",
+      "rating": 3,
+      "title": "Solide, aber nichts Besonderes",
+      "body": "Das Material ist okay, auch wenn die Verarbeitung sauberer sein könnte. Der Merino Crewneck Knit Sweater sieht gut aus, knittert aber leichter, als mir lieb ist. Für den Alltag brauchbar, aber ich würde es nicht als besonders bezeichnen."
+    },
+    {
+      "review_id": "rev-0070",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "de",
+      "rating": 1,
+      "title": "Leider schlechte Qualität",
+      "body": "Die Größe stimmt überhaupt nicht, er fällt viel kleiner aus als beschrieben. Der Cloudstep Cushioned Running Shoes ist unbequem und ich habe ihn seitdem kaum getragen."
+    },
+    {
+      "review_id": "rev-0071",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "es",
+      "rating": 5,
+      "title": "Preciosa confección",
+      "body": "El envío fue rápido y llegó estupendamente embalado. Me hacen cumplidos cada vez que llevo el Harbor Lightweight Rain Shell. El Harbor Lightweight Rain Shell queda perfecto y es maravillosamente suave al tacto."
+    },
+    {
+      "review_id": "rev-0072",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "es",
+      "rating": 1,
+      "title": "Muy decepcionado",
+      "body": "Por este precio esperaba mucha más calidad del Cashmere-Blend Ribbed Scarf. La tela parece barata y fina, nada que ver con las fotos."
+    },
+    {
+      "review_id": "rev-0073",
+      "product_id": "prod-106",
+      "product_name": "Everyday Organic Cotton Tee",
+      "source_language": "es",
+      "rating": 2,
+      "title": "Muy decepcionado",
+      "body": "Llegó con un defecto evidente y devolverlo fue un engorro. La tela parece barata y fina, nada que ver con las fotos."
+    },
+    {
+      "review_id": "rev-0074",
+      "product_id": "prod-106",
+      "product_name": "Everyday Organic Cotton Tee",
+      "source_language": "es",
+      "rating": 3,
+      "title": "Sólido pero nada del otro mundo",
+      "body": "El Everyday Organic Cotton Tee se ve bien, pero se arruga más de lo que me gustaría. Sirve para el día a día, pero no diría que es especial. El corte está bien, pero conviene pedir una talla más si dudas."
+    },
+    {
+      "review_id": "rev-0075",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "es",
+      "rating": 2,
+      "title": "No se parece a las fotos",
+      "body": "La tela parece barata y fina, nada que ver con las fotos."
+    },
+    {
+      "review_id": "rev-0076",
+      "product_id": "prod-107",
+      "product_name": "Metro Wool Overcoat",
+      "source_language": "es",
+      "rating": 4,
+      "title": "Lo recomiendo muchísimo",
+      "body": "Fiel a la talla y aún más bonito en persona. Es tan cómodo que olvido que lo llevo puesto, y no destiñe al lavarlo. La calidad del Metro Wool Overcoat es excelente y las costuras son impecables."
+    },
+    {
+      "review_id": "rev-0077",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "es",
+      "rating": 4,
+      "title": "Me encanta sin más",
+      "body": "Llevo el Cloudstep Cushioned Running Shoes casi todos los días y sigue pareciendo nuevo. El envío fue rápido y llegó estupendamente embalado."
+    },
+    {
+      "review_id": "rev-0078",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "es",
+      "rating": 4,
+      "title": "Ya es mi prenda favorita",
+      "body": "Me hacen cumplidos cada vez que llevo el Cashmere-Blend Ribbed Scarf."
+    },
+    {
+      "review_id": "rev-0079",
+      "product_id": "prod-108",
+      "product_name": "Studio High-Rise Leggings",
+      "source_language": "es",
+      "rating": 3,
+      "title": "Cumple su función, sin más",
+      "body": "Sirve para el día a día, pero no diría que es especial. Es una compra razonable; nada destacó ni para bien ni para mal."
+    },
+    {
+      "review_id": "rev-0080",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "es",
+      "rating": 5,
+      "title": "Justo lo que esperaba",
+      "body": "El Cloudstep Cushioned Running Shoes es muy versátil, sirve tanto para arreglarse como para el día a día. La calidad del Cloudstep Cushioned Running Shoes es excelente y las costuras son impecables. Llevo el Cloudstep Cushioned Running Shoes casi todos los días y sigue pareciendo nuevo."
+    },
+    {
+      "review_id": "rev-0081",
+      "product_id": "prod-105",
+      "product_name": "Trailhead Waterproof Hiking Boots",
+      "source_language": "es",
+      "rating": 5,
+      "title": "Ya es mi prenda favorita",
+      "body": "Fiel a la talla y aún más bonito en persona. El color es idéntico al de la foto y la tela parece de gama alta. Me hacen cumplidos cada vez que llevo el Trailhead Waterproof Hiking Boots."
+    },
+    {
+      "review_id": "rev-0082",
+      "product_id": "prod-102",
+      "product_name": "Coastal Linen Midi Dress",
+      "source_language": "es",
+      "rating": 5,
+      "title": "La mejor compra del año",
+      "body": "Es tan cómodo que olvido que lo llevo puesto, y no destiñe al lavarlo."
+    },
+    {
+      "review_id": "rev-0083",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "es",
+      "rating": 4,
+      "title": "Superó mis expectativas",
+      "body": "La calidad del Riverside Corduroy Overshirt es excelente y las costuras son impecables. Me hacen cumplidos cada vez que llevo el Riverside Corduroy Overshirt. El Riverside Corduroy Overshirt es muy versátil, sirve tanto para arreglarse como para el día a día."
+    },
+    {
+      "review_id": "rev-0084",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "es",
+      "rating": 1,
+      "title": "No volvería a comprarlo",
+      "body": "Llegó con un defecto evidente y devolverlo fue un engorro. El color destiñó muchísimo tras un solo lavado, muy decepcionante. El Cashmere-Blend Ribbed Scarf empezó a estropearse tras solo un par de lavados."
+    },
+    {
+      "review_id": "rev-0085",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "es",
+      "rating": 1,
+      "title": "Muy decepcionado",
+      "body": "Llegó con un defecto evidente y devolverlo fue un engorro. El color destiñó muchísimo tras un solo lavado, muy decepcionante."
+    },
+    {
+      "review_id": "rev-0086",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "it",
+      "rating": 4,
+      "title": "Lo adoro e basta",
+      "body": "Il Weekender Canvas Tote Bag veste alla perfezione ed è meravigliosamente morbido sulla pelle."
+    },
+    {
+      "review_id": "rev-0087",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "it",
+      "rating": 5,
+      "title": "Il miglior acquisto dell'anno",
+      "body": "Indosso il Cloudstep Cushioned Running Shoes quasi ogni giorno e sembra ancora nuovo."
+    },
+    {
+      "review_id": "rev-0088",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "it",
+      "rating": 5,
+      "title": "Lo adoro e basta",
+      "body": "Il Cashmere-Blend Ribbed Scarf veste alla perfezione ed è meravigliosamente morbido sulla pelle. Ricevo complimenti ogni volta che indosso il Cashmere-Blend Ribbed Scarf. Fedele alla taglia e ancora più bello dal vivo."
+    },
+    {
+      "review_id": "rev-0089",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "it",
+      "rating": 3,
+      "title": "Carino, anche se non perfetto",
+      "body": "È un acquisto ragionevole; niente di particolarmente buono o cattivo."
+    },
+    {
+      "review_id": "rev-0090",
+      "product_id": "prod-104",
+      "product_name": "Merino Crewneck Knit Sweater",
+      "source_language": "it",
+      "rating": 5,
+      "title": "Già il mio capo preferito",
+      "body": "Il colore è identico a quello della foto e il tessuto sembra di alta qualità. Il Merino Crewneck Knit Sweater è molto versatile, adatto sia a un look elegante che casual."
+    },
+    {
+      "review_id": "rev-0091",
+      "product_id": "prod-113",
+      "product_name": "Harbor Lightweight Rain Shell",
+      "source_language": "it",
+      "rating": 2,
+      "title": "Qualità scadente, purtroppo",
+      "body": "Il Harbor Lightweight Rain Shell ha iniziato a rovinarsi dopo appena un paio di lavaggi."
+    },
+    {
+      "review_id": "rev-0092",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "it",
+      "rating": 3,
+      "title": "Va bene una volta capita la taglia",
+      "body": "Fa il suo dovere, anche se speravo in un tessuto un po' più spesso. Qualità nel complesso discreta, ma il prezzo mi sembra un po' alto."
+    },
+    {
+      "review_id": "rev-0093",
+      "product_id": "prod-107",
+      "product_name": "Metro Wool Overcoat",
+      "source_language": "it",
+      "rating": 4,
+      "title": "Lo consiglio vivamente",
+      "body": "Indosso il Metro Wool Overcoat quasi ogni giorno e sembra ancora nuovo. La spedizione è stata veloce e l'articolo è arrivato imballato benissimo. Il Metro Wool Overcoat veste alla perfezione ed è meravigliosamente morbido sulla pelle."
+    },
+    {
+      "review_id": "rev-0094",
+      "product_id": "prod-112",
+      "product_name": "Cashmere-Blend Ribbed Scarf",
+      "source_language": "pt",
+      "rating": 3,
+      "title": "Razoável pelo preço",
+      "body": "O Cashmere-Blend Ribbed Scarf é bonito, mas amarrota mais facilmente do que eu gostaria. O material é aceitável, embora os acabamentos pudessem ser mais cuidados."
+    },
+    {
+      "review_id": "rev-0095",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "pt",
+      "rating": 4,
+      "title": "Já é a minha peça favorita",
+      "body": "A qualidade do Cloudstep Cushioned Running Shoes é excelente e as costuras são impecáveis. Uso o Cloudstep Cushioned Running Shoes quase todos os dias e continua a parecer novo."
+    },
+    {
+      "review_id": "rev-0096",
+      "product_id": "prod-101",
+      "product_name": "Alpine Quilted Puffer Jacket",
+      "source_language": "pt",
+      "rating": 4,
+      "title": "Já é a minha peça favorita",
+      "body": "Uma excelente relação qualidade-preço e nota-se que foi feito para durar. O Alpine Quilted Puffer Jacket assenta na perfeição e é maravilhosamente suave ao toque."
+    },
+    {
+      "review_id": "rev-0097",
+      "product_id": "prod-111",
+      "product_name": "Riverside Corduroy Overshirt",
+      "source_language": "pt",
+      "rating": 5,
+      "title": "Vale cada cêntimo",
+      "body": "Uma excelente relação qualidade-preço e nota-se que foi feito para durar. O Riverside Corduroy Overshirt é muito versátil, serve tanto para ocasiões formais como para o dia a dia. Uso o Riverside Corduroy Overshirt quase todos os dias e continua a parecer novo."
+    },
+    {
+      "review_id": "rev-0098",
+      "product_id": "prod-106",
+      "product_name": "Everyday Organic Cotton Tee",
+      "source_language": "pt",
+      "rating": 5,
+      "title": "Simplesmente adoro",
+      "body": "Recebo elogios sempre que uso o Everyday Organic Cotton Tee."
+    },
+    {
+      "review_id": "rev-0099",
+      "product_id": "prod-110",
+      "product_name": "Cloudstep Cushioned Running Shoes",
+      "source_language": "pt",
+      "rating": 5,
+      "title": "Recomendo vivamente",
+      "body": "Uma excelente relação qualidade-preço e nota-se que foi feito para durar. A qualidade do Cloudstep Cushioned Running Shoes é excelente e as costuras são impecáveis."
+    },
+    {
+      "review_id": "rev-0100",
+      "product_id": "prod-109",
+      "product_name": "Weekender Canvas Tote Bag",
+      "source_language": "pt",
+      "rating": 3,
+      "title": "Sólido mas nada de especial",
+      "body": "É uma compra sensata; nada se destacou nem pela positiva nem pela negativa. Serve para o dia a dia, mas não diria que é especial. Qualidade razoável no geral, mas o preço parece-me um pouco elevado."
+    }
+  ]
+}
