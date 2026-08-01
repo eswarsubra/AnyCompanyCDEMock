@@ -19,8 +19,10 @@
 - [Configuration](#configuration)
 - [Running](#running)
 - [Testing](#testing)
+- [Evaluation](#evaluation)
 - [Deployment](#deployment)
 - [Cost estimate](#cost-estimate)
+- [Scaling to production](#scaling-to-production)
 - [Documentation](#documentation)
 - [Handoff](#handoff)
 
@@ -150,6 +152,29 @@ constants:
   quality scoring, so models can be swapped without code changes.
 
 No secrets are stored in configuration or committed to the repository.
+
+### Adding a language
+
+Extending the prototype (FR/DE) to another of the customer's markets is a
+configuration change, not a code change:
+
+1. **Add the language code to `target_languages`** in `config/pipeline.json`
+   (e.g. add `"es"` for Spanish). The codes are ISO-639-1 and must be in the
+   pipeline's supported set (`en`, `fr`, `de`, `es`, `it`, `pt` — extend
+   `SUPPORTED_LANGUAGES` in `review_pipeline/config.py` if you need one beyond
+   these, and confirm [Amazon Translate supports the
+   pair](https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html)).
+2. **Redeploy** so the batch Lambdas pick up the new config
+   (`cdk deploy ReviewPipelineBatch`), or set the
+   `REVIEW_PIPELINE_TARGET_LANGUAGES` env override for a one-off run.
+3. **Re-run** the pipeline; the translation stage now emits the new language,
+   the quality stage scores it against the same threshold, and the API serves it
+   with no route changes.
+4. **Validate quality** with the evaluation harness
+   (`python -m evaluation.run_evaluation`) — the report gains a row per language
+   so you can confirm the new language clears the keep threshold before relying
+   on it. No summarization change is needed: summaries are generated per product
+   from whatever translations are kept.
 
 ## Running
 
@@ -386,9 +411,34 @@ The model and service choices (see
   Using Sonnet here instead would multiply this line item several-fold for little
   quality gain on a narrow, structured task.
 
-To lower cost further, the biggest levers are: translating fewer languages,
-raising the quality threshold is *not* a cost lever (scoring still runs), and
-batching/caching translations for duplicate or near-duplicate reviews.
+To lower cost further, the biggest levers are translating fewer languages and
+batching/caching translations for duplicate or near-duplicate reviews. Note that
+raising the quality threshold is *not* a cost lever — scoring still runs on every
+translation; it only changes how many are kept.
+
+## Scaling to production
+
+The prototype is deliberately a working *pattern*, not a hardened production
+system. Scaling it to AnyCompany Apparel's full volume (~52,000 reviews/month
+across all 14 markets) is mostly configuration and volume, plus a defined set of
+hardening steps:
+
+- **Volume & concurrency.** The architecture already scales horizontally —
+  translation and scoring are per-review and Bedrock/Translate are managed
+  services. The prototype caps Lambda reserved concurrency low to bound blast
+  radius; raise those caps (and confirm Bedrock/Translate account quotas) as
+  volume grows. Cost scales roughly linearly (see the table above).
+- **More languages.** Add them via config (see [Adding a language](#adding-a-language)) —
+  no architectural change; each language adds one Translate + one scoring pass.
+- **Larger batches.** Very large batches may warrant chunking the dataset or
+  moving from a single Step Functions run to a map/distributed pattern; the
+  stateless, S3-between-stages design supports this without rework.
+- **Production hardening (required before go-live).** Authentication/WAF on the
+  API, VPC placement, KMS CMKs, S3 `RETAIN` removal policy, and monitoring/alarms
+  are intentionally out of scope for the prototype. Each is enumerated with
+  rationale in [`docs/HANDOFF.md` §7 "Before you take this to
+  production"](docs/HANDOFF.md) and cross-referenced from the committed security
+  scan suppressions (`.ash/.ash.yaml`), so nothing is silently deferred.
 
 ## Documentation
 
