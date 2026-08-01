@@ -27,8 +27,11 @@ credentials
 *.log
 .claude/
 
-# Security & quality scan output — evidence is attached to SIM, not committed
-.ash/
+# Security & quality scan output — evidence is attached to SIM, not committed.
+# The ASH config (.ash/.ash.yaml) IS committed: it records the justified
+# scanner suppressions and keeps the gate reproducible.
+.ash/*
+!.ash/.ash.yaml
 .protoshield/
 .holmes/
 
