@@ -78,6 +78,11 @@ _BODY_MAX = 2000
 _MAX_BODY_SENTENCES = 3
 _MIN_BODY_SENTENCES = 1
 
+# Rating-to-sentiment boundaries (see docs/dataset-spec.md): 4-5 -> positive,
+# 3 -> neutral, 1-2 -> negative. Named so the business rule is explicit.
+POSITIVE_RATING_THRESHOLD = 4
+NEUTRAL_RATING = 3
+
 
 # --------------------------------------------------------------------------- #
 # Helpers
@@ -85,9 +90,9 @@ _MIN_BODY_SENTENCES = 1
 
 def _sentiment_for_rating(rating: int) -> str:
     """Map a 1-5 rating to a sentiment bucket."""
-    if rating >= 4:
+    if rating >= POSITIVE_RATING_THRESHOLD:
         return "positive"
-    if rating == 3:
+    if rating == NEUTRAL_RATING:
         return "neutral"
     return "negative"
 
@@ -295,7 +300,16 @@ def main(argv: Optional[List[str]] = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: file not found: {exc.filename}", file=sys.stderr)
         return 2
+    except UnicodeDecodeError as exc:
+        # Content file is not valid UTF-8.
+        print(f"error: could not decode {args.content} as UTF-8: {exc}", file=sys.stderr)
+        return 1
+    except OSError as exc:
+        # Other read-side I/O failures: PermissionError, IsADirectoryError, etc.
+        print(f"error: could not read {args.content}: {exc}", file=sys.stderr)
+        return 1
     except ValueError as exc:
+        # Invalid JSON or content that fails schema validation.
         print(f"error: {exc}", file=sys.stderr)
         return 1
 

@@ -163,3 +163,19 @@ def test_unwritable_output_reports_cleanly(tmp_path, content_library, pinned_tim
     )
     assert rc == 1
     assert "could not write output" in capsys.readouterr().err
+
+
+def test_missing_content_file_reports_cleanly(tmp_path, capsys):
+    # Nonexistent content path -> clean "file not found", exit 2, no traceback.
+    rc = gd.main(["--content", str(tmp_path / "nope.json"), "--out", str(tmp_path / "o.json")])
+    assert rc == 2
+    assert "file not found" in capsys.readouterr().err
+
+
+def test_undecodable_content_reports_cleanly(tmp_path, capsys):
+    # Content file that is not valid UTF-8 -> clean decode error, exit 1.
+    content_path = tmp_path / "content.json"
+    content_path.write_bytes(b"\xff\xfe\x00\x01 not utf-8")
+    rc = gd.main(["--content", str(content_path), "--out", str(tmp_path / "o.json")])
+    assert rc == 1
+    assert "decode" in capsys.readouterr().err.lower()
