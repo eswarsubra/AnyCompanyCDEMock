@@ -196,9 +196,9 @@ The project uses two complementary layers of testing:
 - **Unit tests** with AWS calls mocked — parsing, language routing, prompt and
   response handling, quality-threshold boundaries, API response shape, and
   security-relevant paths.
-- **An evaluation harness** (see [`evaluation/`](evaluation/), added in a later
-  phase) that measures AI-output quality — back-translation similarity and an
-  LLM-as-judge score — and emits a re-runnable quality report.
+- **An evaluation harness** (see [`evaluation/`](evaluation/)) that measures
+  AI-output quality — back-translation similarity and an LLM-as-judge score — and
+  emits a re-runnable quality report (see [Evaluation](#evaluation) below).
 
 Run the unit tests from the repo root:
 
@@ -209,6 +209,38 @@ pytest
 Unit tests mock all AWS calls and run offline. The infrastructure is verified
 separately with `cdk synth` plus a security scan (cdk-nag / cfn-nag / checkov)
 over the synthesized CloudFormation — no deployment required.
+
+## Evaluation
+
+Unit tests prove the code is *correct*; the evaluation harness ([`evaluation/`](evaluation/))
+measures whether the AI output is *good enough to ship*. It scores every
+translation two independent ways and writes a Markdown quality report to
+[`evaluation/reports/quality-report.md`](evaluation/reports/quality-report.md):
+
+- **LLM-as-judge fidelity/fluency** — reuses the pipeline's own Bedrock quality
+  stage (`review_pipeline.quality`), so the score reflects the exact
+  prompt/model/threshold the deployed pipeline uses.
+- **Back-translation similarity** — translates each target-language translation
+  back to its source language and lexically compares it to the original; an
+  independent, deterministic check that flags round-trips that lose meaning.
+
+The harness imports the real pipeline stages with AWS clients injected (the same
+seam the unit tests use), so it runs against live AWS or fully offline:
+
+```bash
+# Live: real Amazon Translate + Bedrock (needs sandbox AWS credentials).
+python -m evaluation.run_evaluation \
+    --dataset data/sample_reviews.json \
+    --out evaluation/reports/quality-report.md
+
+# Offline: deterministic fake clients — no AWS, no cost (CI / quick smoke).
+python -m evaluation.run_evaluation --offline
+```
+
+The report is re-runnable by the receiving team on their own dataset — it is a
+customer-facing deliverable, not just a test. Per-language mean scores and the
+percentage of translations kept (above threshold) are the conversion-relevant
+signal for how much translated content reaches the product page.
 
 ## Deployment
 
