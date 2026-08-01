@@ -58,7 +58,7 @@ class SummarizerClient(Protocol):
     """
 
     def summarize(
-        self, prompt: str, model_id: str, max_tokens: int, temperature: float
+        self, prompt: str, model_id: str, max_tokens: int, temperature: Optional[float]
     ) -> str:
         """Return a text completion for ``prompt`` from the given model."""
         ...
@@ -81,14 +81,17 @@ class BedrockSummarizer:
         self._client = AnthropicBedrock(aws_region=aws_region)
 
     def summarize(
-        self, prompt: str, model_id: str, max_tokens: int, temperature: float
+        self, prompt: str, model_id: str, max_tokens: int, temperature: Optional[float]
     ) -> str:
         """Send a single-message request to Bedrock and return the text reply."""
+        # temperature is only sent when configured — some models (e.g.
+        # claude-sonnet-5) reject the parameter with a 400.
+        optional_kwargs = {} if temperature is None else {"temperature": temperature}
         response = self._client.messages.create(
             model=model_id,
             max_tokens=max_tokens,
-            temperature=temperature,
             messages=[{"role": "user", "content": prompt}],
+            **optional_kwargs,
         )
         # Concatenate the text blocks of the response into a single string.
         parts = [

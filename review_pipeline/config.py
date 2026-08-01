@@ -45,18 +45,24 @@ class ConfigError(ValueError):
 
 @dataclass(frozen=True)
 class ModelConfig:
-    """Bedrock model settings for one task."""
+    """Bedrock model settings for one task.
+
+    ``temperature`` is optional: some models (e.g. ``us.anthropic.claude-sonnet-5``)
+    reject the ``temperature`` request parameter with a 400. Omit it from config
+    for those models and it is simply not sent to Bedrock; the model's own
+    default is used. When set it must be within ``[0.0, 1.0]``.
+    """
 
     model_id: str
     max_tokens: int = 512
-    temperature: float = 0.0
+    temperature: Optional[float] = None
 
     def validate(self) -> None:
         if not self.model_id:
             raise ConfigError("model_id must be a non-empty string")
         if self.max_tokens <= 0:
             raise ConfigError(f"max_tokens must be positive, got {self.max_tokens}")
-        if not 0.0 <= self.temperature <= 1.0:
+        if self.temperature is not None and not 0.0 <= self.temperature <= 1.0:
             raise ConfigError(
                 f"temperature must be within [0.0, 1.0], got {self.temperature}"
             )
@@ -120,10 +126,13 @@ class PipelineConfig:
 def _model_from_dict(data: Dict[str, Any], *, task: str) -> ModelConfig:
     if "model_id" not in data:
         raise ConfigError(f"models.{task}.model_id is required")
+    # temperature is optional: absent -> None -> not sent to Bedrock (some models
+    # reject the parameter). Present -> parsed and range-validated.
+    raw_temperature = data.get("temperature")
     return ModelConfig(
         model_id=str(data["model_id"]),
         max_tokens=int(data.get("max_tokens", 512)),
-        temperature=float(data.get("temperature", 0.0)),
+        temperature=float(raw_temperature) if raw_temperature is not None else None,
     )
 
 

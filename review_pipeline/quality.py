@@ -54,7 +54,7 @@ class QualityJudge(Protocol):
         target_lang: str,
         model_id: str,
         max_tokens: int,
-        temperature: float,
+        temperature: Optional[float],
     ) -> float:
         """Return a fidelity+fluency score for one translation."""
         ...
@@ -160,7 +160,7 @@ class BedrockQualityJudge:
         target_lang: str,
         model_id: str,
         max_tokens: int,
-        temperature: float,
+        temperature: Optional[float],
     ) -> float:
         """Score one translation: build the prompt, call Bedrock, parse the reply."""
         prompt = build_scoring_prompt(
@@ -171,11 +171,14 @@ class BedrockQualityJudge:
             scale_min=self._scale_min,
             scale_max=self._scale_max,
         )
+        # temperature is only sent when configured — some models reject the
+        # parameter with a 400 (see summarization.BedrockSummarizer).
+        optional_kwargs = {} if temperature is None else {"temperature": temperature}
         message = self._client.messages.create(
             model=model_id,
             max_tokens=max_tokens,
-            temperature=temperature,
             messages=[{"role": "user", "content": prompt}],
+            **optional_kwargs,
         )
         return parse_score(_first_text(message), self._scale_min, self._scale_max)
 

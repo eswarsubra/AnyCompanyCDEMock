@@ -273,6 +273,67 @@ def test_client_called_with_configured_model_settings():
     assert "Red Shirt" in call["prompt"]
 
 
+# --------------------------------------------------------------------------- #
+# BedrockSummarizer: temperature is only sent to Bedrock when configured
+# --------------------------------------------------------------------------- #
+class _FakeMessages:
+    """Captures the kwargs passed to messages.create()."""
+
+    def __init__(self) -> None:
+        self.create_kwargs: Dict[str, Any] = {}
+
+    def create(self, **kwargs: Any) -> Any:
+        self.create_kwargs = kwargs
+
+        class _Block:
+            type = "text"
+            text = "a summary"
+
+        class _Resp:
+            content = [_Block()]
+
+        return _Resp()
+
+
+def _summarizer_with_fake_client():
+    """A BedrockSummarizer whose anthropic client is replaced by a fake.
+
+    Bypasses __init__ (which imports/constructs AnthropicBedrock) so the wrapper
+    logic can be tested with no network and no anthropic install.
+    """
+    from review_pipeline.summarization import BedrockSummarizer
+
+    summ = BedrockSummarizer.__new__(BedrockSummarizer)
+
+    class _Client:
+        def __init__(self) -> None:
+            self.messages = _FakeMessages()
+
+    summ._client = _Client()  # type: ignore[attr-defined]
+    return summ
+
+
+def test_bedrock_summarizer_omits_temperature_when_none():
+    """temperature=None -> the parameter is NOT sent (models like sonnet-5 400 on it)."""
+    summ = _summarizer_with_fake_client()
+
+    out = summ.summarize(prompt="p", model_id="us.anthropic.claude-sonnet-5",
+                         max_tokens=512, temperature=None)
+
+    assert out == "a summary"
+    assert "temperature" not in summ._client.messages.create_kwargs
+    assert summ._client.messages.create_kwargs["model"] == "us.anthropic.claude-sonnet-5"
+
+
+def test_bedrock_summarizer_sends_temperature_when_set():
+    """temperature set -> forwarded to Bedrock unchanged."""
+    summ = _summarizer_with_fake_client()
+
+    summ.summarize(prompt="p", model_id="m", max_tokens=64, temperature=0.3)
+
+    assert summ._client.messages.create_kwargs["temperature"] == 0.3
+
+
 def test_client_called_once_per_product():
     """The client is invoked exactly once per distinct product."""
     cfg = _make_cfg()

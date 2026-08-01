@@ -255,6 +255,18 @@ def test_temperature_out_of_range_rejected(tmp_path):
         load_config(_write_config(tmp_path, data))
 
 
+def test_temperature_optional_absent_is_none(tmp_path):
+    """temperature is optional: omitting it yields None (not sent to Bedrock).
+
+    Some models (e.g. us.anthropic.claude-sonnet-5) reject the temperature
+    request parameter with a 400, so config must be able to leave it unset.
+    """
+    data = _base_config_dict()
+    data["models"]["summarization"].pop("temperature", None)
+    conf = load_config(_write_config(tmp_path, data))
+    assert conf.summarization_model.temperature is None
+
+
 def test_missing_models_key_rejected(tmp_path):
     data = _base_config_dict()
     del data["models"]
