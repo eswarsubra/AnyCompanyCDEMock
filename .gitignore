@@ -39,3 +39,6 @@ credentials
 # deliverable. Committed docs live in docs/ and README.md; scratch planning,
 # roadmaps, and working write-ups go here and are never committed.
 planning/
+
+# CDK deploy outputs (resource ids/URLs) — regenerated per deploy, not source.
+cdk-outputs.json

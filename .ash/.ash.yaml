@@ -26,6 +26,14 @@ global_settings:
     # pytest's own cache directory — a build artifact, not source.
     - path: "**/.pytest_cache/**"
       reason: "pytest cache artifact, not committed source; its marker file trips high-entropy heuristics."
+    # CDK Lambda asset bundles: pip-installed third-party packages (anthropic,
+    # jsonschema, pydantic, rpds, ...) copied in at synth-time bundling. SAST on
+    # vendored dependencies is noise (bandit flags their internal patterns, not
+    # our code). Dependency CVEs are covered by grype/syft against the SBOM; the
+    # synthesized CloudFormation (cdk.out/*.template.json) is still scanned by
+    # cfn-nag/checkov. Excludes only the asset.* bundle dirs, not the templates.
+    - path: "cdk.out/asset.*/**"
+      reason: "CDK Lambda bundle = pip-installed third-party packages; SAST on vendored deps is noise. CFN templates still scanned; dep CVEs via grype/syft."
 
   suppressions:
     # === detect-secrets false positive ==================================

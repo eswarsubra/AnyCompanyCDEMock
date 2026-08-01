@@ -4,3 +4,9 @@
 **/.venv/
 __pycache__/
 **/__pycache__/
+# CDK Lambda asset bundles contain pip-installed third-party packages (anthropic,
+# jsonschema, pydantic, ...). SAST on vendored dependencies is noise — exclude the
+# bundled asset dirs. The synthesized CloudFormation templates (cdk.out/*.template.json)
+# are NOT excluded, so cfn-nag/checkov still scan the infrastructure.
+cdk.out/asset.*/
+cdk.out/**/asset.*/
