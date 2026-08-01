@@ -63,15 +63,15 @@ def test_language_counts_sum_exactly_for_various_totals():
 
 
 def test_determinism_same_seed_identical_bytes(content_library, pinned_timestamp):
-    a = gd.serialize(gd.build_dataset(content_library, seed=42, generated_at=pinned_timestamp))
-    b = gd.serialize(gd.build_dataset(content_library, seed=42, generated_at=pinned_timestamp))
-    assert a == b
+    first_output = gd.serialize(gd.build_dataset(content_library, seed=42, generated_at=pinned_timestamp))
+    second_output = gd.serialize(gd.build_dataset(content_library, seed=42, generated_at=pinned_timestamp))
+    assert first_output == second_output
 
 
 def test_different_seed_changes_output(content_library, pinned_timestamp):
-    a = gd.serialize(gd.build_dataset(content_library, seed=1, generated_at=pinned_timestamp))
-    b = gd.serialize(gd.build_dataset(content_library, seed=2, generated_at=pinned_timestamp))
-    assert a != b
+    seed1_output = gd.serialize(gd.build_dataset(content_library, seed=1, generated_at=pinned_timestamp))
+    seed2_output = gd.serialize(gd.build_dataset(content_library, seed=2, generated_at=pinned_timestamp))
+    assert seed1_output != seed2_output
 
 
 def test_sentiment_rating_alignment(content_library):
