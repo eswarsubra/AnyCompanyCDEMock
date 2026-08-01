@@ -299,9 +299,15 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as fh:
-        fh.write(serialize(dataset))
+    try:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        with open(args.out, "w", encoding="utf-8") as fh:
+            fh.write(serialize(dataset))
+    except OSError as exc:
+        # Covers PermissionError, IsADirectoryError, disk-full, etc. Report
+        # cleanly rather than crashing with a traceback at this I/O boundary.
+        print(f"error: could not write output to {args.out}: {exc}", file=sys.stderr)
+        return 1
 
     print(
         f"Wrote {len(dataset['reviews'])} reviews to {args.out} "

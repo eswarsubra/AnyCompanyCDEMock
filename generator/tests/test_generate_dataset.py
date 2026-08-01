@@ -140,3 +140,26 @@ def test_invalid_content_rejected(tmp_path):
     content_path.write_text(json.dumps(bad), encoding="utf-8")
     with pytest.raises(ValueError):
         gd.load_content(content_path)
+
+
+def test_unwritable_output_reports_cleanly(tmp_path, content_library, pinned_timestamp, capsys):
+    # A file where a directory is expected makes the output path unwritable,
+    # so the write raises OSError. main() must report it and exit non-zero
+    # rather than propagating a traceback (external I/O boundary).
+    content_path = tmp_path / "content.json"
+    content_path.write_text(json.dumps(content_library), encoding="utf-8")
+
+    blocker = tmp_path / "blocker"
+    blocker.write_text("not a directory", encoding="utf-8")
+    out_path = blocker / "out.json"  # parent is a file -> mkdir/open fails
+
+    rc = gd.main(
+        [
+            "--content", str(content_path),
+            "--out", str(out_path),
+            "--seed", "1337",
+            "--generated-at", pinned_timestamp,
+        ]
+    )
+    assert rc == 1
+    assert "could not write output" in capsys.readouterr().err
