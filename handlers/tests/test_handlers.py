@@ -437,18 +437,23 @@ class FailingS3Client(FakeS3Client):
     ],
 )
 def test_batch_handler_reraises_on_read_failure(handler_mod, seed_key, seed_obj) -> None:
-    """A failed S3 read re-raises so Step Functions retry/catch can act on it."""
+    """A failed S3 read re-raises so Step Functions retry/catch can act on it.
+
+    s3_io wraps the underlying ClientError in S3IOError (with the bucket/key in
+    the message); the original error is preserved on ``__cause__``.
+    """
     failing = FailingS3Client(fail_on="get")
     failing.seed(seed_key, seed_obj)  # irrelevant: get_object raises first
-    with pytest.raises(_FakeClientError):
+    with pytest.raises(s3_io.S3IOError) as excinfo:
         handler_mod.handler({}, None, s3_client=failing)
+    assert isinstance(excinfo.value.__cause__, _FakeClientError)
 
 
 def test_ingestion_handler_reraises_on_write_failure() -> None:
-    """A failed S3 write also propagates out of the stage boundary."""
+    """A failed S3 write also propagates (as S3IOError) out of the stage boundary."""
     failing = FailingS3Client(fail_on="put")
     failing.seed(keys.RAW_REVIEWS_KEY, [_valid_en_review()])
-    with pytest.raises(_FakeClientError):
+    with pytest.raises(s3_io.S3IOError):
         ingestion_handler.handler({}, None, s3_client=failing)
 
 
@@ -471,3 +476,24 @@ def test_client_error_code_extracts_and_defaults() -> None:
 
     assert client_error_code(_FakeClientError("Throttling")) == "Throttling"
     assert client_error_code(ValueError("no response attr")) is None
+
+
+def test_client_error_code_unwraps_cause_chain() -> None:
+    """The AWS code is still found when the ClientError is wrapped (S3IOError)."""
+    from handlers.errors import client_error_code
+
+    try:
+        try:
+            raise _FakeClientError("SlowDown")
+        except _FakeClientError as exc:
+            raise s3_io.S3IOError("failed to read s3://b/k") from exc
+    except s3_io.S3IOError as wrapped:
+        assert client_error_code(wrapped) == "SlowDown"
+
+
+def test_read_json_wraps_bad_json_as_s3ioerror(s3: FakeS3Client) -> None:
+    """A corrupt object body surfaces as S3IOError, not a raw JSONDecodeError."""
+    s3.store[(BUCKET, "bad/key.json")] = b"{ not valid json "
+    with pytest.raises(s3_io.S3IOError) as excinfo:
+        s3_io.read_json(BUCKET, "bad/key.json", client=s3)
+    assert "not valid JSON" in str(excinfo.value)

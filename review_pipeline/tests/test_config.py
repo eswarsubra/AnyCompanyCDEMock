@@ -69,9 +69,9 @@ def _base_config_dict():
 
 
 def _write_config(tmp_path: Path, data) -> Path:
-    p = tmp_path / "pipeline.json"
-    p.write_text(json.dumps(data), encoding="utf-8")
-    return p
+    config_path = tmp_path / "pipeline.json"
+    config_path.write_text(json.dumps(data), encoding="utf-8")
+    return config_path
 
 
 # ---------------------------------------------------------------------------
@@ -278,17 +278,17 @@ def test_missing_file_raises(tmp_path):
 
 
 def test_invalid_json_raises(tmp_path):
-    p = tmp_path / "bad.json"
-    p.write_text("{ not valid json ", encoding="utf-8")
+    config_path = tmp_path / "bad.json"
+    config_path.write_text("{ not valid json ", encoding="utf-8")
     with pytest.raises(ConfigError, match="not valid JSON"):
-        load_config(p)
+        load_config(config_path)
 
 
 def test_non_object_json_raises(tmp_path):
-    p = tmp_path / "list.json"
-    p.write_text(json.dumps(["fr", "de"]), encoding="utf-8")
+    config_path = tmp_path / "list.json"
+    config_path.write_text(json.dumps(["fr", "de"]), encoding="utf-8")
     with pytest.raises(ConfigError, match="JSON object"):
-        load_config(p)
+        load_config(config_path)
 
 
 # ---------------------------------------------------------------------------

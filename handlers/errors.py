@@ -28,14 +28,21 @@ def client_error_code(exc: BaseException) -> Optional[str]:
 
     Uses duck typing on the exception's ``response`` mapping rather than
     importing botocore, so this module stays import-side-effect free and unit
-    tests never need AWS libraries configured. Returns ``None`` for any
-    exception that does not carry an AWS error code.
+    tests never need AWS libraries configured. Walks the ``__cause__`` chain so
+    the code is still found when the ``ClientError`` has been wrapped (e.g. by
+    :class:`handlers.s3_io.S3IOError`). Returns ``None`` for any exception with
+    no AWS error code anywhere in its cause chain.
     """
-    response = getattr(exc, "response", None)
-    if isinstance(response, dict):
-        error = response.get("Error")
-        if isinstance(error, dict):
-            return error.get("Code")
+    seen = set()
+    current: Optional[BaseException] = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        response = getattr(current, "response", None)
+        if isinstance(response, dict):
+            error = response.get("Error")
+            if isinstance(error, dict) and error.get("Code"):
+                return error.get("Code")
+        current = current.__cause__
     return None
 
 

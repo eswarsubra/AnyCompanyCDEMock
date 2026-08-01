@@ -19,6 +19,18 @@ import json
 from typing import Any, Optional
 
 
+class S3IOError(RuntimeError):
+    """A read/write against S3 failed, annotated with the bucket and key.
+
+    Wraps the underlying ``botocore.exceptions.ClientError`` (transport/permission
+    failures) or ``json.JSONDecodeError`` (a corrupt object body) so callers get
+    the S3 location in the message while the original exception is preserved via
+    ``__cause__``. The batch handlers let this propagate through their
+    ``stage_boundary`` so Step Functions retry/catch still acts on it; the API
+    handler catches it and returns a 500.
+    """
+
+
 def _default_client() -> Any:
     """Lazily construct the default boto3 S3 client.
 
@@ -47,15 +59,23 @@ def read_json(bucket: str, key: str, client: Optional[Any] = None) -> Any:
         The deserialized Python object (typically a ``list`` or ``dict``).
 
     Raises:
-        json.JSONDecodeError: if the object body is not valid JSON.
-        botocore.exceptions.ClientError: if the object cannot be fetched.
+        S3IOError: if the object cannot be fetched (wrapping the botocore
+            ``ClientError``) or its body is not valid JSON (wrapping
+            ``json.JSONDecodeError``). The bucket and key are in the message.
     """
     s3 = client if client is not None else _default_client()
-    response = s3.get_object(Bucket=bucket, Key=key)
-    body = response["Body"].read()
-    if isinstance(body, bytes):
-        body = body.decode("utf-8")
-    return json.loads(body)
+    try:
+        response = s3.get_object(Bucket=bucket, Key=key)
+        body = response["Body"].read()
+        if isinstance(body, bytes):
+            body = body.decode("utf-8")
+        return json.loads(body)
+    except json.JSONDecodeError as exc:
+        raise S3IOError(
+            f"object s3://{bucket}/{key} is not valid JSON"
+        ) from exc
+    except Exception as exc:  # boto3 ClientError and other transport failures
+        raise S3IOError(f"failed to read s3://{bucket}/{key}") from exc
 
 
 def write_json(
@@ -73,13 +93,17 @@ def write_json(
             S3 client is constructed lazily; tests pass a fake client here.
 
     Raises:
-        botocore.exceptions.ClientError: if the object cannot be written.
+        S3IOError: if the object cannot be written (wrapping the botocore
+            ``ClientError``). The bucket and key are in the message.
     """
     s3 = client if client is not None else _default_client()
     payload = json.dumps(obj, ensure_ascii=False).encode("utf-8")
-    s3.put_object(
-        Bucket=bucket,
-        Key=key,
-        Body=payload,
-        ContentType="application/json",
-    )
+    try:
+        s3.put_object(
+            Bucket=bucket,
+            Key=key,
+            Body=payload,
+            ContentType="application/json",
+        )
+    except Exception as exc:  # boto3 ClientError and other transport failures
+        raise S3IOError(f"failed to write s3://{bucket}/{key}") from exc
