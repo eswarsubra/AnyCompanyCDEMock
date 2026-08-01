@@ -25,6 +25,11 @@ from typing import Any, Dict, List, Optional
 # Languages the pipeline knows how to reason about (matches the dataset schema).
 SUPPORTED_LANGUAGES = frozenset({"en", "fr", "de", "es", "it", "pt"})
 
+# Default Bedrock max_tokens when a model config omits it. 512 is comfortably
+# above the ~60-token summaries and short quality scores the pipeline requests,
+# with headroom, while bounding cost/latency. Also the ModelConfig default.
+DEFAULT_MAX_TOKENS = 512
+
 # Default location of the JSON config file, relative to the repo root.
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG_PATH = _REPO_ROOT / "config" / "pipeline.json"
@@ -54,7 +59,7 @@ class ModelConfig:
     """
 
     model_id: str
-    max_tokens: int = 512
+    max_tokens: int = DEFAULT_MAX_TOKENS
     temperature: Optional[float] = None
 
     def validate(self) -> None:
@@ -131,7 +136,7 @@ def _model_from_dict(data: Dict[str, Any], *, task: str) -> ModelConfig:
     raw_temperature = data.get("temperature")
     return ModelConfig(
         model_id=str(data["model_id"]),
-        max_tokens=int(data.get("max_tokens", 512)),
+        max_tokens=int(data.get("max_tokens", DEFAULT_MAX_TOKENS)),
         temperature=float(raw_temperature) if raw_temperature is not None else None,
     )
 
