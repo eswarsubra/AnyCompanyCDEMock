@@ -1,0 +1,17 @@
+# Runtime dependencies bundled into the Lambda deployment package.
+#
+# Used only by the CDK Lambda asset bundling step in infra/stacks/common.py
+# (pip install -r lambda-requirements.txt -t /asset-output). This is the
+# runtime-only subset — pytest and other dev tools are deliberately excluded so
+# they never ship in the function bundle.
+#
+# boto3 is provided by the AWS Lambda Python runtime, so it is intentionally
+# omitted here to keep the bundle small; the translation stage uses the runtime
+# copy. These are the deps that are NOT in the runtime and must be bundled:
+#
+#   jsonschema  - per-record review validation in review_pipeline.ingestion
+#                 (pulls in attrs / referencing / rpds-py, which ships native
+#                 wheels -> bundle in the Lambda build image, not on the host).
+#   anthropic   - AnthropicBedrock client for summarization + quality (ADR-0002).
+jsonschema>=4.20,<5
+anthropic>=0.120,<1
