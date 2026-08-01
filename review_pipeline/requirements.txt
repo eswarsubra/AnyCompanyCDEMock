@@ -1,6 +1,9 @@
 # Runtime dependencies:
 # - boto3: Amazon Translate client used by the translation stage.
+# - anthropic: AnthropicBedrock client for summarization + quality scoring
+#   (see ADR-0002); constructed lazily at runtime, never at import.
 #   (config + logging remain dependency-free standard library.)
 boto3
+anthropic
 # Test/dev dependencies:
 pytest
