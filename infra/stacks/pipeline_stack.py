@@ -30,6 +30,11 @@ from .common import (
     lambda_code,
 )
 
+# Reserved-concurrency cap per batch-stage Lambda. The pipeline is sequential
+# (Step Functions invokes one stage at a time), so 2 is ample headroom while
+# still bounding blast radius on the shared account concurrency pool.
+STAGE_RESERVED_CONCURRENCY = 2
+
 
 class PipelineStack(Stack):
     """Batch stages orchestrated by a Step Functions state machine."""
@@ -158,7 +163,13 @@ class PipelineStack(Stack):
         timeout: Duration,
         memory_mb: int,
     ) -> lambda_.Function:
-        """Create one batch-stage Lambda from the shared repo-root asset."""
+        """Create one batch-stage Lambda from the shared repo-root asset.
+
+        Each stage Lambda gets a reserved-concurrency cap so a single pipeline
+        run can never exhaust the account's Lambda concurrency (checkov
+        CKV_AWS_115). The batch is sequential (one invocation per stage at a
+        time), so a small cap is sufficient and leaves headroom for reruns.
+        """
         return lambda_.Function(
             self,
             construct_id,
@@ -168,6 +179,7 @@ class PipelineStack(Stack):
             environment=dict(env),
             timeout=timeout,
             memory_size=memory_mb,
+            reserved_concurrent_executions=STAGE_RESERVED_CONCURRENCY,
         )
 
     def _invoke_model_statement(self, model_id: str) -> iam.PolicyStatement:
@@ -188,10 +200,30 @@ class PipelineStack(Stack):
         )
 
     def _invoke_step(self, name: str, fn: lambda_.Function) -> tasks.LambdaInvoke:
-        """A LambdaInvoke task that unwraps the Lambda payload for the next step."""
-        return tasks.LambdaInvoke(
+        """A LambdaInvoke task that unwraps the Lambda payload for the next step.
+
+        Each stage carries a retry policy: transient Lambda/service faults are
+        retried with exponential backoff before the run is failed. Because the
+        stages are invoked *synchronously* by Step Functions, this retry/catch
+        is the correct resilience mechanism for this pipeline — a Lambda async
+        dead-letter queue would never fire on a synchronous invoke (see the
+        CKV_AWS_116 note in docs/infra-contracts.md).
+        """
+        invoke = tasks.LambdaInvoke(
             self,
             f"{name}Invoke",
             lambda_function=fn,
             payload_response_only=True,
         )
+        invoke.add_retry(
+            errors=[
+                "Lambda.ServiceException",
+                "Lambda.AWSLambdaException",
+                "Lambda.SdkClientException",
+                "Lambda.TooManyRequestsException",
+            ],
+            interval=Duration.seconds(2),
+            max_attempts=3,
+            backoff_rate=2.0,
+        )
+        return invoke

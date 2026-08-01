@@ -17,6 +17,10 @@ from constructs import Construct
 
 from .common import KEY_SUMMARIES, RUNTIME, SERVING_PREFIX, lambda_code
 
+# Reserved-concurrency ceiling for the read API Lambda. Product-page reads are
+# lightweight; this bounds account-pool blast radius (checkov CKV_AWS_115).
+API_RESERVED_CONCURRENCY = 10
+
 
 class ApiStack(Stack):
     """Read-only API surface over the serving store."""
@@ -45,6 +49,10 @@ class ApiStack(Stack):
             },
             timeout=Duration.seconds(30),
             memory_size=256,
+            # Cap concurrency so a burst of PDP reads can't exhaust the account
+            # Lambda pool (checkov CKV_AWS_115). Read path is lightweight; this
+            # is a prototype ceiling and a documented production tuning knob.
+            reserved_concurrent_executions=API_RESERVED_CONCURRENCY,
         )
 
         # Least-privilege reads: the serving store objects only. No write, no
