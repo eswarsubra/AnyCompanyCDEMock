@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """ApiStack — the read API Lambda fronted by an API Gateway REST API.
 
 The api Lambda only reads the serving store; it has NO Bedrock or Translate

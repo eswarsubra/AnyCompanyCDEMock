@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """DataStack — the single private S3 bucket that backs the whole pipeline.
 
 Every stage reads and writes JSON objects under prefixes of this one bucket

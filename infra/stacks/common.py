@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Shared helpers for the pipeline/api stacks.
 
 Keeps the Lambda asset definition and S3 object-key constants in one place so

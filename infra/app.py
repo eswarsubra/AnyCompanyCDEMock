@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """CDK app entry point for the AnyCompany Apparel review pipeline.
 
 Instantiates the three stacks (DataStack, PipelineStack, ApiStack) and wires the
