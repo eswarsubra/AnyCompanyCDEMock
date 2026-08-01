@@ -65,13 +65,14 @@ def render_markdown(result: EvaluationResult, *, generated_at: str) -> str:
     )
     lines.append("|---|---:|---:|---:|---:|---:|---:|")
     for lang in result.target_languages:
-        m = result.per_language.get(lang)
-        if m is None:
+        metrics = result.per_language.get(lang)
+        if metrics is None:
             continue
         lines.append(
-            f"| {lang} | {m.translation_count} | {_fmt(m.mean_judge_score)} | "
-            f"{_fmt(m.mean_similarity)} | {m.kept_count} | {m.filtered_count} | "
-            f"{m.kept_pct:g}% |"
+            f"| {lang} | {metrics.translation_count} | "
+            f"{_fmt(metrics.mean_judge_score)} | {_fmt(metrics.mean_similarity)} | "
+            f"{metrics.kept_count} | {metrics.filtered_count} | "
+            f"{metrics.kept_pct:g}% |"
         )
     lines.append("")
 

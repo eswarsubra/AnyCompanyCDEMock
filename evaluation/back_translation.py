@@ -30,6 +30,14 @@ logger = get_logger(__name__)
 # French/German tokens (é, ü, ß, ...) are preserved as single tokens.
 _TOKEN_RE = re.compile(r"\w+", re.UNICODE)
 
+# Weights for the similarity blend: vocabulary overlap (Jaccard) counts for more
+# than length agreement, so a round-trip must preserve *words* to score high, not
+# just length. The two weights sum to 1.0.
+JACCARD_WEIGHT = 0.75
+LENGTH_WEIGHT = 0.25
+# Decimal places the similarity score is rounded to (keeps reports/tests stable).
+SIMILARITY_PRECISION = 4
+
 
 def _tokenize(text: str) -> List[str]:
     """Lowercase, Unicode-aware word tokenization. Pure."""
@@ -51,18 +59,27 @@ def similarity(original: str, round_trip: str) -> float:
     Returns:
         A similarity score in ``[0.0, 1.0]`` (higher = more similar).
     """
-    a, b = _tokenize(original), _tokenize(round_trip)
-    if not a and not b:
+    original_tokens = _tokenize(original)
+    round_trip_tokens = _tokenize(round_trip)
+    if not original_tokens and not round_trip_tokens:
         return 1.0
-    if not a or not b:
+    if not original_tokens or not round_trip_tokens:
         return 0.0
 
-    set_a, set_b = set(a), set(b)
-    jaccard = len(set_a & set_b) / len(set_a | set_b)
+    original_vocab = set(original_tokens)
+    round_trip_vocab = set(round_trip_tokens)
+    jaccard = len(original_vocab & round_trip_vocab) / len(
+        original_vocab | round_trip_vocab
+    )
     # Length ratio in [0,1]: penalizes round-trips that balloon or collapse.
-    length_ratio = min(len(a), len(b)) / max(len(a), len(b))
+    length_ratio = min(len(original_tokens), len(round_trip_tokens)) / max(
+        len(original_tokens), len(round_trip_tokens)
+    )
     # Weight vocabulary overlap more than length; both must be decent to score high.
-    return round(0.75 * jaccard + 0.25 * length_ratio, 4)
+    return round(
+        JACCARD_WEIGHT * jaccard + LENGTH_WEIGHT * length_ratio,
+        SIMILARITY_PRECISION,
+    )
 
 
 def back_translate_review(
