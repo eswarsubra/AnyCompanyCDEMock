@@ -1,0 +1,27 @@
+{
+  "target_languages": ["fr", "de"],
+  "passthrough_language": "en",
+  "quality": {
+    "threshold": 3.0,
+    "scale_min": 1,
+    "scale_max": 5
+  },
+  "models": {
+    "summarization": {
+      "model_id": "us.anthropic.claude-sonnet-5",
+      "max_tokens": 512,
+      "temperature": 0.2
+    },
+    "quality_scoring": {
+      "model_id": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+      "max_tokens": 256,
+      "temperature": 0.0
+    }
+  },
+  "aws": {
+    "region": "us-east-1"
+  },
+  "logging": {
+    "level": "INFO"
+  }
+}
