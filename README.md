@@ -168,12 +168,21 @@ aws stepfunctions start-execution \
   --profile <your-profile> --region us-east-1
 ```
 
-**Query the read API** once a run has produced the serving store:
+**Query the read API** once a run has produced the serving store. The API
+exposes exactly two `GET` routes (no auth) — always request a full product path,
+e.g. with `productId = prod-102`:
 
 ```bash
-curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/<productId>/reviews
-curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/<productId>/summary
+curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/prod-102/reviews
+curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/prod-102/summary
 ```
+
+> **Note — `{"message":"Missing Authentication Token"}`.** This is API Gateway's
+> generic response for a path/method that has no matching route; it does **not**
+> mean the API requires authentication (the prototype API is intentionally
+> unauthenticated). You will see it if you hit the base URL (`.../prod/`) or any
+> path other than the two routes above. Use a full `/products/{productId}/reviews`
+> or `/products/{productId}/summary` path and it returns `200`.
 
 The state-machine ARN and API URL are CloudFormation outputs of the deployed
 stacks. The stages are also importable as a plain library

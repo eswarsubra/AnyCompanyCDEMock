@@ -55,7 +55,11 @@ All stages share one private S3 bucket (stack `ReviewPipelineData`).
   sections for exact commands.
 - **Call the API.** `GET /products/{productId}/reviews` and
   `GET /products/{productId}/summary` on the API Gateway URL (a CloudFormation
-  output of the API stack).
+  output of the API stack), e.g. `.../prod/products/prod-102/summary`. These two
+  routes are the *only* ones defined and need no auth. Hitting the base URL or
+  any other path returns `{"message":"Missing Authentication Token"}` — that is
+  API Gateway's generic "no matching route" response, **not** an auth
+  requirement. Always use a full product path.
 
 ## 4. Common changes you'll want to make
 
@@ -161,3 +165,18 @@ deliberate **prototype** trade-off, recorded as a justified suppression in
 - **Common causes.** Bedrock/Translate access not enabled in the account/region;
   the configured model inference profile not enabled; or throttling (the state
   machine retries transient faults with backoff before failing the run).
+- **`{"message":"Missing Authentication Token"}` from the API.** Not an auth
+  problem — it is API Gateway's generic response for a path/method with no
+  matching route. The API defines only `GET /products/{productId}/reviews` and
+  `GET /products/{productId}/summary`; the base URL (`.../prod/`) and any other
+  path return this message. Use a full product path, e.g.
+  `.../prod/products/prod-102/summary`.
+- **Empty summaries or all translations filtered.** Check the summarization /
+  quality Lambda logs for a Bedrock error. Two failure modes seen during
+  bring-up: (a) a `403` on `bedrock:InvokeModel` for a `foundation-model` ARN
+  means the invoke-model IAM grant is missing the underlying foundation-model
+  ARNs the inference profile routes to (the policy must cover both the
+  `inference-profile` ARN and the `foundation-model` ARNs); (b) a `400`
+  "`temperature` is deprecated for this model" means the configured model
+  rejects the `temperature` parameter — omit `temperature` for that model in
+  `config/pipeline.json` (it is optional and simply not sent when unset).
