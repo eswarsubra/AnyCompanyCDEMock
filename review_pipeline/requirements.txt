@@ -1,3 +1,6 @@
-# Runtime: standard library only (config + logging are dependency-free).
+# Runtime dependencies:
+# - boto3: Amazon Translate client used by the translation stage.
+#   (config + logging remain dependency-free standard library.)
+boto3
 # Test/dev dependencies:
 pytest
