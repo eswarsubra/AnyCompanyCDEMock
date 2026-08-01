@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
+import errno
 import json
 import random
 import sys
@@ -302,17 +303,25 @@ def main(argv: Optional[List[str]] = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: file not found: {exc.filename}", file=sys.stderr)
         return 2
-    except UnicodeDecodeError as exc:
-        # Content file is not valid UTF-8.
-        print(f"error: could not decode {args.content} as UTF-8: {exc}", file=sys.stderr)
+    except UnicodeDecodeError:
+        # Content file is not valid UTF-8. Report the operation + file; the raw
+        # decoder detail is not interpolated into the user-facing message.
+        print(f"error: could not decode {args.content} as UTF-8", file=sys.stderr)
         return 1
     except OSError as exc:
         # Other read-side I/O failures: PermissionError, IsADirectoryError, etc.
-        print(f"error: could not read {args.content}: {exc}", file=sys.stderr)
+        # Surface the OS error *category* (errno name), not the raw message.
+        reason = errno.errorcode.get(exc.errno, "I/O error")
+        print(f"error: could not read {args.content} ({reason})", file=sys.stderr)
         return 1
-    except ValueError as exc:
-        # Invalid JSON or content that fails schema validation.
-        print(f"error: {exc}", file=sys.stderr)
+    except ValueError:
+        # Invalid JSON or content that fails schema validation. The raw exception
+        # can carry schema internals, so report a clean, generic message.
+        print(
+            f"error: {args.content} is not valid content "
+            "(malformed JSON or failed schema validation)",
+            file=sys.stderr,
+        )
         return 1
 
     try:
@@ -320,9 +329,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         with open(args.out, "w", encoding="utf-8") as fh:
             fh.write(serialize(dataset))
     except OSError as exc:
-        # Covers PermissionError, IsADirectoryError, disk-full, etc. Report
-        # cleanly rather than crashing with a traceback at this I/O boundary.
-        print(f"error: could not write output to {args.out}: {exc}", file=sys.stderr)
+        # Covers PermissionError, IsADirectoryError, disk-full, etc. Report the
+        # operation + errno category cleanly rather than crashing with a
+        # traceback or leaking the raw OS message at this I/O boundary.
+        reason = errno.errorcode.get(exc.errno, "I/O error")
+        print(
+            f"error: could not write output to {args.out} ({reason})",
+            file=sys.stderr,
+        )
         return 1
 
     print(
