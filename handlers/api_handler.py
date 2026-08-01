@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Lambda handler for the read API (API Gateway REST proxy integration).
 
 Wraps :func:`review_pipeline.api.get_product_reviews` and

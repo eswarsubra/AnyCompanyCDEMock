@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """JSON read/write helpers over S3 for the pipeline handlers.
 
 All handlers move plain, JSON-serializable objects through a single S3 bucket

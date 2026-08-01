@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Named constants for the S3 object layout and handler environment variables.
 
 Centralising these here keeps the S3 keys out of the individual handlers as

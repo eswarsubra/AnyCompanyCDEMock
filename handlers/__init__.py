@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """AWS Lambda handlers for the AnyCompany Apparel review pipeline (Phase 6).
 
 Each module here is a thin adapter that wraps one Phase 5 ``review_pipeline``

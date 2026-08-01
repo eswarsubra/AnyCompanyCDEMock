@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Lambda handler for the ingestion stage.
 
 Reads the raw review dataset from S3, runs :func:`review_pipeline.ingestion.load_reviews`

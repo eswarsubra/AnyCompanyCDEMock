@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Unit tests for the Phase 6 Lambda handlers and the S3 IO helper.
 
 Everything here runs offline: there is NO real AWS access. S3 is faked with a
