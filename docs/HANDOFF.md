@@ -38,8 +38,24 @@ code change.
 
 ## 3. How to operate it day to day
 
-_Completed when the pipeline and infrastructure land (Phases 5–6)._ Will cover:
-running the pipeline, where inputs and outputs live, and how to call the API.
+The pipeline is an AWS Step Functions state machine (stack `ReviewPipelineBatch`)
+that runs the four stages in order — ingestion → translation → summarization →
+quality — with a separate read API (stack `ReviewPipelineApi`) over the results.
+All stages share one private S3 bucket (stack `ReviewPipelineData`).
+
+- **Inputs and outputs live in S3.** The object layout (which prefix each stage
+  reads and writes) is documented in
+  [`docs/infra-contracts.md`](infra-contracts.md). Raw reviews go to
+  `raw/reviews.json`; the API serves from `serving/scored.json` and
+  `staged/summaries.json`.
+- **Run a batch.** Seed `raw/reviews.json` into the data bucket, then
+  `aws stepfunctions start-execution --state-machine-arn <ARN>`. The ARN is a
+  CloudFormation output of the batch stack. See the README
+  [Running](../README.md#running) and [Deployment](../README.md#deployment)
+  sections for exact commands.
+- **Call the API.** `GET /products/{productId}/reviews` and
+  `GET /products/{productId}/summary` on the API Gateway URL (a CloudFormation
+  output of the API stack).
 
 ## 4. Common changes you'll want to make
 
@@ -59,14 +75,18 @@ running the pipeline, where inputs and outputs live, and how to call the API.
 - **AWS account & region.** The prototype targets `us-east-1`. Amazon Translate
   and the configured Amazon Bedrock inference profiles must be enabled in the
   account and region you deploy to.
-- **IAM.** Infrastructure grants least-privilege permissions per Lambda (details
-  land with the CDK stacks in Phase 6). Review these against your organization's
-  standards before production use.
+- **IAM.** Infrastructure grants least-privilege permissions per Lambda: S3
+  access is prefix/key-scoped, Bedrock `InvokeModel` is scoped to a single
+  inference-profile ARN, `translate:TranslateText` is granted only to the
+  translation Lambda, and the read API Lambda has read-only access to the
+  serving store and no Bedrock/Translate access at all. Review these against
+  your organization's standards before production use.
 - **No secrets in the repo.** There are no credentials in source or config.
   Deployment uses the standard AWS credential chain.
 - **Cost.** Costs are usage-based (Translate per character, Bedrock per token,
-  plus S3/Lambda/API Gateway). A per-service breakdown is added once the
-  infrastructure is finalized — see the README [Cost estimate](../README.md#cost-estimate).
+  plus S3/Lambda/API Gateway). The README
+  [Cost estimate](../README.md#cost-estimate) has a per-service breakdown and
+  estimates at prototype, pilot, and production scale.
 
 ## 6. Quality and testing
 
@@ -90,8 +110,54 @@ This is a prototype. At minimum, review before production use:
 - Data handling: the prototype uses synthetic, PII-free data. Real customer
   reviews may carry PII and need corresponding handling and compliance review.
 
+### 7a. Security-scan trade-offs to revisit
+
+The infrastructure passes cdk-nag and cfn-nag with zero findings. A broader
+policy scanner (checkov) additionally flags the items below. Each is a
+deliberate **prototype** trade-off, recorded as a justified suppression in
+[`.ash/.ash.yaml`](../.ash/.ash.yaml) and in the cdk-nag suppressions in
+[`infra/app.py`](../infra/app.py). Before production, decide on each:
+
+- **Lambdas in a VPC** (checkov CKV_AWS_117 / no cdk-nag equivalent enforced).
+  Prototype Lambdas call only AWS service APIs (S3, Bedrock, Translate) over
+  public AWS endpoints with least-privilege IAM. For production, place them in a
+  VPC with interface endpoints if your network policy requires egress control.
+- **Customer-managed KMS keys** for Lambda environment variables (CKV_AWS_173)
+  and CloudWatch log groups (CKV_AWS_158). The prototype relies on AWS-managed
+  encryption. Environment variables hold only non-secret config (bucket name,
+  region, model IDs, threshold). Add a CMK if your key-management policy requires
+  one.
+- **Lambda dead-letter queues** (CKV_AWS_116). Not applicable as-is: the stages
+  are invoked *synchronously* by Step Functions, where an async DLQ never fires.
+  Resilience is provided at the state-machine level via retry with exponential
+  backoff. If you move any stage to asynchronous invocation, add a DLQ then.
+- **API authorization and caching** (CKV_AWS_59 / CKV_AWS_120, and cdk-nag
+  APIG4 / COG4). The prototype read API is unauthenticated by design and serves
+  non-sensitive, public product-review summaries. Add an authorizer (and, for
+  internet exposure, a WAF) and tune API Gateway caching before production.
+- **Reserved concurrency** (CKV_AWS_115) *is* set on all first-party Lambdas;
+  tune the ceilings (`STAGE_RESERVED_CONCURRENCY`, `API_RESERVED_CONCURRENCY`)
+  to your real throughput.
+- **Data-bucket removal policy.** The prototype data bucket uses `DESTROY` +
+  auto-delete so `cdk destroy` tears down cleanly. Switch to `RETAIN` (and drop
+  `auto_delete_objects`) for production so a stack teardown can never delete
+  review data.
+
 ## 8. Where to look when something breaks
 
-_Completed alongside the pipeline and infrastructure (Phases 5–6)._ Will cover:
-logs, the stage most likely at fault for a given symptom, and how to re-run a
-single stage.
+- **Logs.** Every Lambda logs structured JSON to its own CloudWatch log group.
+  The Step Functions state machine has execution logging (level ALL) and X-Ray
+  tracing enabled, so a failed run shows exactly which stage failed and why.
+  The API Gateway stage has access + execution logging on its own log group.
+- **Which stage is at fault.** Symptoms map to stages by their S3 output (see
+  [`docs/infra-contracts.md`](infra-contracts.md)): missing/invalid
+  `staged/ingested.json` → ingestion; wrong or absent translations in
+  `staged/translated.json` → translation; missing `staged/summaries.json` →
+  summarization; unexpected filtering in `serving/scored.json` → quality; a
+  correct serving store but a bad HTTP response → the API Lambda.
+- **Re-run a single stage.** Because each stage reads and writes plain S3
+  objects, you can re-invoke one stage's Lambda directly (or restart the state
+  machine) once the upstream object exists — no need to rerun the whole batch.
+- **Common causes.** Bedrock/Translate access not enabled in the account/region;
+  the configured model inference profile not enabled; or throttling (the state
+  machine retries transient faults with backoff before failing the run).

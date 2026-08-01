@@ -108,10 +108,10 @@ This is a **prototype**, deliberately bounded:
 
 ## Prerequisites
 
-<!-- Populated as the code and infrastructure land (Phases 3–6). -->
-
-- **Runtime:** Python 3.
-- **IaC:** AWS CDK (Python).
+- **Runtime:** Python 3.12 (the Lambda runtime target; 3.9+ works for local
+  development and `cdk synth`).
+- **IaC:** AWS CDK (Python) — the AWS CDK CLI (`cdk`, v2) and Node.js are needed
+  to `synth`/`deploy` the infrastructure.
 - **AWS account:** a sandbox/prototype account with access to Amazon Translate
   and Amazon Bedrock in `us-east-1`, plus permission to deploy S3, Lambda, and
   API Gateway. The pipeline is deployed into this **target account**; see
@@ -122,10 +122,20 @@ This is a **prototype**, deliberately bounded:
 
 ## Setup
 
-<!-- Populated when the Python package and dependencies land (Phase 4+). -->
+Clone the repository and create a virtual environment. There are two dependency
+sets: the pipeline runtime (`review_pipeline/requirements.txt`) and the CDK app
+(`infra/requirements.txt`).
 
-Clone the repository and install dependencies (instructions added as the code
-lands).
+```bash
+git clone <repo-url> && cd cde-anycompany-apparel-review-pipeline
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r review_pipeline/requirements.txt   # runtime + pytest
+pip install -r infra/requirements.txt             # aws-cdk-lib, constructs, cdk-nag
+```
+
+The runtime depends only on `boto3` (Amazon Translate) and `anthropic`
+(AnthropicBedrock client for Bedrock); configuration and logging use the
+standard library only.
 
 ## Configuration
 
@@ -143,12 +153,34 @@ No secrets are stored in configuration or committed to the repository.
 
 ## Running
 
-<!-- Populated when the pipeline modules land (Phase 5). -->
+Once deployed (see [Deployment](#deployment)), the pipeline runs as an AWS Step
+Functions state machine that chains the four batch stages in order —
+ingestion → translation → summarization → quality — with the read API served
+separately by API Gateway. Each stage is a Lambda that reads its input object(s)
+from S3 and writes its output back to S3 (the object layout is in
+[`docs/infra-contracts.md`](docs/infra-contracts.md)).
+
+**Trigger a batch run** (after seeding `raw/reviews.json` into the data bucket):
+
+```bash
+aws stepfunctions start-execution \
+  --state-machine-arn <ReviewPipelineStateMachine ARN> \
+  --profile <your-profile> --region us-east-1
+```
+
+**Query the read API** once a run has produced the serving store:
+
+```bash
+curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/<productId>/reviews
+curl https://<api-id>.execute-api.us-east-1.amazonaws.com/prod/products/<productId>/summary
+```
+
+The state-machine ARN and API URL are CloudFormation outputs of the deployed
+stacks. The stages are also importable as a plain library
+(`review_pipeline.*`) with AWS clients injected, so the pipeline can be exercised
+end-to-end offline in tests without deploying.
 
 ## Testing
-
-<!-- Populated alongside the pipeline modules (Phase 5) and evaluation harness
-     (Phase 7). -->
 
 The project uses two complementary layers of testing:
 
@@ -159,13 +191,51 @@ The project uses two complementary layers of testing:
   phase) that measures AI-output quality — back-translation similarity and an
   LLM-as-judge score — and emits a re-runnable quality report.
 
+Run the unit tests from the repo root:
+
+```bash
+pytest
+```
+
+Unit tests mock all AWS calls and run offline. The infrastructure is verified
+separately with `cdk synth` plus a security scan (cdk-nag / cfn-nag / checkov)
+over the synthesized CloudFormation — no deployment required.
+
 ## Deployment
 
-<!-- Populated when the CDK stacks land (Phase 6). -->
+Infrastructure is defined with AWS CDK (Python) as three stacks —
+`ReviewPipelineData` (the S3 data bucket), `ReviewPipelineBatch` (the four
+batch Lambdas + Step Functions state machine), and `ReviewPipelineApi` (the read
+API) — and deploys repeatably into a clean AWS account. IAM is scoped
+least-privilege per Lambda (S3 access is prefix-scoped, Bedrock `InvokeModel` is
+scoped to a single inference-profile ARN, and only the translation Lambda has
+`translate:TranslateText`). Target prototype region: `us-east-1`.
 
-Infrastructure is defined with AWS CDK (Python) and deploys repeatably into a
-clean AWS account. IAM is scoped least-privilege per Lambda. Target prototype
-region: `us-east-1`.
+**Synthesize and (optionally) inspect** the CloudFormation offline:
+
+```bash
+cdk synth                       # emits templates to cdk.out/
+```
+
+**Deploy** into the target account (nothing is hard-wired to a specific account —
+account/region come from the CDK environment):
+
+```bash
+cdk bootstrap aws://<account-id>/us-east-1   # one-time per account/region
+cdk deploy --all --profile <your-profile>
+```
+
+Then seed the input and run the pipeline:
+
+```bash
+aws s3 cp data/sample_reviews.json s3://<data-bucket>/raw/reviews.json --profile <your-profile>
+aws stepfunctions start-execution --state-machine-arn <ARN> --profile <your-profile>
+```
+
+The bucket name, state-machine ARN, and API URL are CloudFormation outputs of
+the deployed stacks. `cdk destroy --all` tears the prototype down cleanly (the
+data bucket uses `DESTROY` + auto-delete for the prototype — a production
+deployment must switch this to `RETAIN`; see [`docs/HANDOFF.md`](docs/HANDOFF.md)).
 
 **Deployment target vs. access model.** The pipeline is deployed into the
 **customer sandbox account**, which owns all runtime resources. During the
@@ -173,8 +243,7 @@ prototype engagement, delivery is performed **cross-account**: the engineer
 operates from a separate delivery account that assumes a role into the customer
 sandbox to run the deployment. The customer's own engineering team can instead
 deploy directly from within their account — the CDK app is not tied to the
-cross-account path. Concrete bootstrap and `cdk deploy` commands are documented
-here when the CDK stacks land (Phase 6).
+cross-account path; it reads account/region from the standard CDK environment.
 
 ## Cost estimate
 

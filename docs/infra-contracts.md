@@ -101,6 +101,14 @@ Lambda convention `handler(event, context) -> dict`.
     avoid wildcard `s3:*` and avoid `bedrock:InvokeModel` on `*` resource.
 - No secrets in code/env. Region default `us-east-1`. cdk-nag/cfn-nag run via
   ASH over `cdk synth` output (run `cdk synth` before scanning).
+- **Resilience & concurrency.** Batch stages are invoked *synchronously* by the
+  Step Functions state machine, so a Lambda async dead-letter queue (checkov
+  CKV_AWS_116) would never fire — transient faults are instead handled at the
+  state-machine level with retry + exponential backoff on each task. All
+  first-party Lambdas set reserved concurrency (CKV_AWS_115) to bound blast
+  radius on the shared account pool. Remaining checkov trade-offs (VPC, KMS
+  CMKs, API auth/caching) are prototype choices, justified in `.ash/.ash.yaml`
+  and flagged for production in HANDOFF.md §7a.
 
 ## Ground rules
 - Handlers and CDK are the only new code; do NOT modify `review_pipeline/`.
