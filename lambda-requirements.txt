@@ -15,3 +15,7 @@
 #   anthropic   - AnthropicBedrock client for summarization + quality (ADR-0002).
 jsonschema>=4.20,<5
 anthropic>=0.120,<1
+# urllib3 is pulled in transitively (botocore / anthropic's httpx). Pin to a
+# version clear of the known cookie-leak / redirect / decompression-DoS
+# advisories flagged by dependency scanning (ProtoShield/grype).
+urllib3>=2.7.0
