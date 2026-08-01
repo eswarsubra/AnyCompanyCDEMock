@@ -1,0 +1,7 @@
+# CDK app dependencies (install into a virtualenv before `cdk synth`).
+aws-cdk-lib>=2,<3
+constructs>=10,<11
+# cdk-nag provides the AwsSolutions rule pack. It is optional: infra/app.py
+# guards the import so `cdk synth` still succeeds with only the two deps above
+# installed. Install it to embed suppressions and enforce the checks at synth.
+cdk-nag>=2,<3
