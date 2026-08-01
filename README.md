@@ -225,6 +225,24 @@ cdk bootstrap aws://<account-id>/us-east-1   # one-time per account/region
 cdk deploy --all --profile <your-profile>
 ```
 
+### Verify the deployment
+
+Before seeding data, confirm all three stacks deployed and capture their
+outputs (the bucket name, state-machine ARN, and API URL you'll need next):
+
+```bash
+# All three stacks should report CREATE_COMPLETE / UPDATE_COMPLETE.
+aws cloudformation describe-stacks \
+  --query "Stacks[?starts_with(StackName,'ReviewPipeline')].[StackName,StackStatus]" \
+  --output table --profile <your-profile> --region us-east-1
+
+# Retrieve the outputs (data bucket, state-machine ARN, API URL).
+aws cloudformation describe-stacks --stack-name ReviewPipelineData \
+  --query "Stacks[0].Outputs" --output table --profile <your-profile>
+```
+
+### Run the pipeline
+
 Then seed the input and run the pipeline:
 
 ```bash
@@ -232,10 +250,22 @@ aws s3 cp data/sample_reviews.json s3://<data-bucket>/raw/reviews.json --profile
 aws stepfunctions start-execution --state-machine-arn <ARN> --profile <your-profile>
 ```
 
-The bucket name, state-machine ARN, and API URL are CloudFormation outputs of
-the deployed stacks. `cdk destroy --all` tears the prototype down cleanly (the
-data bucket uses `DESTROY` + auto-delete for the prototype — a production
-deployment must switch this to `RETAIN`; see [`docs/HANDOFF.md`](docs/HANDOFF.md)).
+`cdk destroy --all` tears the prototype down cleanly (the data bucket uses
+`DESTROY` + auto-delete for the prototype — a production deployment must switch
+this to `RETAIN`; see [`docs/HANDOFF.md`](docs/HANDOFF.md)).
+
+### Deployment troubleshooting
+
+| Symptom | Likely cause & fix |
+|---|---|
+| `cdk deploy` fails with "environment … not bootstrapped" | The account/region has no CDK bootstrap stack. Run `cdk bootstrap aws://<account-id>/us-east-1` first. |
+| A stack ends in `ROLLBACK_COMPLETE` / `UPDATE_ROLLBACK_COMPLETE` | Open the stack's **Events** tab (`aws cloudformation describe-stack-events --stack-name <name>`) and read the first `CREATE_FAILED` reason — it names the resource and cause. A `ROLLBACK_COMPLETE` stack from a failed *first* create must be deleted before re-deploying. |
+| Deploy fails on IAM / "not authorized to perform" | The deploying principal lacks permissions (or, cross-account, the bootstrap trust is missing). See the cross-account note above. |
+| Pipeline run fails in the summarization or quality stage | Amazon Bedrock model access is not enabled in the target account/region. Enable the configured Claude inference profiles (see [ADR-0002](docs/adr/0002-model-and-service-selection.md)) in the Bedrock console for `us-east-1`. |
+| Pipeline run fails in the translation stage | Amazon Translate not reachable/enabled in the region, or the target language pair is unsupported. |
+
+Runtime (post-deploy) troubleshooting — logs, which stage failed, re-running a
+single stage — is covered in [`docs/HANDOFF.md`](docs/HANDOFF.md) §8.
 
 **Deployment target vs. access model.** The pipeline is deployed into the
 **customer sandbox account**, which owns all runtime resources. During the
