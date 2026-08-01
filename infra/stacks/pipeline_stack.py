@@ -183,20 +183,36 @@ class PipelineStack(Stack):
         )
 
     def _invoke_model_statement(self, model_id: str) -> iam.PolicyStatement:
-        """Allow bedrock:InvokeModel on exactly one inference-profile ARN.
+        """Allow bedrock:InvokeModel on an inference profile and its models.
 
-        Bedrock model ids in this project are region-prefixed inference profiles
-        (see ADR-0002), e.g. ``us.anthropic.claude-sonnet-5``. The ARN is built
-        from the current partition/region/account so nothing is hard-coded.
+        Bedrock model ids in this project are region-prefixed *inference
+        profiles* (see ADR-0002), e.g. ``us.anthropic.claude-sonnet-5``.
+        Invoking through a cross-region inference profile requires
+        ``bedrock:InvokeModel`` on BOTH the profile ARN AND the underlying
+        foundation-model ARNs the profile routes to — granting only the profile
+        ARN yields a 403 ("no identity-based policy allows bedrock:InvokeModel"
+        on the ``foundation-model`` resource).
+
+        The ``us.`` profile fans out to the foundation model in three regions
+        (us-east-1/us-east-2/us-west-2), so all three account-less
+        ``foundation-model`` ARNs are granted. The foundation-model id is the
+        profile id with its ``us.`` region prefix stripped. ARNs are built from
+        the current partition so nothing is hard-coded to an account.
         """
         profile_arn = (
             f"arn:{Aws.PARTITION}:bedrock:{self.region}:{self.account}"
             f":inference-profile/{model_id}"
         )
+        # Strip the cross-region prefix ("us.") to get the foundation-model id.
+        foundation_model_id = model_id.split(".", 1)[1] if "." in model_id else model_id
+        foundation_model_arns = [
+            f"arn:{Aws.PARTITION}:bedrock:{region}::foundation-model/{foundation_model_id}"
+            for region in ("us-east-1", "us-east-2", "us-west-2")
+        ]
         return iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             actions=["bedrock:InvokeModel"],
-            resources=[profile_arn],
+            resources=[profile_arn, *foundation_model_arns],
         )
 
     def _invoke_step(self, name: str, fn: lambda_.Function) -> tasks.LambdaInvoke:
