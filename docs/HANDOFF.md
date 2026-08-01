@@ -61,6 +61,41 @@ All stages share one private S3 bucket (stack `ReviewPipelineData`).
   API Gateway's generic "no matching route" response, **not** an auth
   requirement. Always use a full product path.
 
+### Deploy from scratch
+
+Self-contained steps to stand the system up in an AWS account (fuller context in
+the README [Deployment](../README.md#deployment) section):
+
+- **Prerequisites:** Python 3.12 + the CDK deps (`pip install -r infra/requirements.txt`),
+  the AWS CDK CLI, Docker running (the Lambda asset is bundled in a build image),
+  and credentials for the target account. Amazon Bedrock model access for the
+  configured inference profiles must be enabled in the target region.
+- **Bootstrap once per account/region:** `cdk bootstrap aws://<account-id>/us-east-1`.
+- **Deploy all three stacks:** `cdk deploy --all --require-approval never
+  --outputs-file cdk-outputs.json`. Account/region come from the CDK environment
+  (nothing is hard-wired). The bundling step pip-installs the runtime deps into
+  the Lambda package automatically.
+- **Read the outputs:** `cdk-outputs.json` (and the CloudFormation console)
+  carry the data-bucket name, the state-machine ARN, and the API base URL.
+- **Seed + run:** upload the dataset to `s3://<data-bucket>/raw/reviews.json`,
+  then start an execution (see "Run a batch" above). Verify by curling a
+  `/products/{id}/summary` route.
+
+### Tear it down
+
+The prototype data bucket uses `RemovalPolicy.DESTROY` with `autoDeleteObjects`
+(a deliberate prototype choice — see §7a; a production deployment must switch to
+`RETAIN`), so teardown is a single command:
+
+- **Destroy all stacks:** `cdk destroy --all` (removes the Lambdas, Step
+  Functions, API Gateway, and the S3 buckets **including their contents**).
+- **Verify:** confirm the three stacks (`ReviewPipelineData`, `ReviewPipelineBatch`,
+  `ReviewPipelineApi`) are gone from CloudFormation. The CDK bootstrap stack
+  (`CDKToolkit`) is intentionally left in place for future deploys; delete it
+  separately only if you are fully decommissioning CDK in the account.
+- **Caution:** because the bucket auto-deletes objects on destroy, back up any
+  review data you need first — teardown is irreversible for the stored objects.
+
 ## 4. Common changes you'll want to make
 
 - **Add a target language.** Add the language to the target-languages
