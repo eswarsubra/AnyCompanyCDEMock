@@ -18,6 +18,7 @@ from review_pipeline.config import load_config
 from review_pipeline.logging_config import configure_logging, get_logger
 
 from handlers import keys, s3_io
+from handlers.errors import stage_boundary
 
 logger = get_logger(__name__)
 
@@ -47,11 +48,22 @@ def handler(
     configure_logging(cfg.log_level)
     bucket = keys.resolve_bucket()
 
-    reviews = s3_io.read_json(bucket, keys.STAGED_INGESTED_KEY, client=s3_client)
-    translated = translation.translate_reviews(reviews, cfg, translator=translator)
-    s3_io.write_json(
-        bucket, keys.STAGED_TRANSLATED_KEY, translated, client=s3_client
-    )
+    with stage_boundary(
+        logger,
+        stage="translation",
+        bucket=bucket,
+        source_key=keys.STAGED_INGESTED_KEY,
+        target_key=keys.STAGED_TRANSLATED_KEY,
+    ):
+        reviews = s3_io.read_json(
+            bucket, keys.STAGED_INGESTED_KEY, client=s3_client
+        )
+        translated = translation.translate_reviews(
+            reviews, cfg, translator=translator
+        )
+        s3_io.write_json(
+            bucket, keys.STAGED_TRANSLATED_KEY, translated, client=s3_client
+        )
 
     logger.info(
         "translation handler complete",

@@ -17,6 +17,7 @@ from review_pipeline.config import load_config
 from review_pipeline.logging_config import configure_logging, get_logger
 
 from handlers import keys, s3_io
+from handlers.errors import stage_boundary
 
 logger = get_logger(__name__)
 
@@ -62,11 +63,20 @@ def handler(
     configure_logging(cfg.log_level)
     bucket = keys.resolve_bucket()
 
-    raw_reviews = s3_io.read_json(bucket, keys.RAW_REVIEWS_KEY, client=s3_client)
-    valid_reviews = ingestion.load_reviews(_extract_records(raw_reviews))
-    s3_io.write_json(
-        bucket, keys.STAGED_INGESTED_KEY, valid_reviews, client=s3_client
-    )
+    with stage_boundary(
+        logger,
+        stage="ingestion",
+        bucket=bucket,
+        source_key=keys.RAW_REVIEWS_KEY,
+        target_key=keys.STAGED_INGESTED_KEY,
+    ):
+        raw_reviews = s3_io.read_json(
+            bucket, keys.RAW_REVIEWS_KEY, client=s3_client
+        )
+        valid_reviews = ingestion.load_reviews(_extract_records(raw_reviews))
+        s3_io.write_json(
+            bucket, keys.STAGED_INGESTED_KEY, valid_reviews, client=s3_client
+        )
 
     logger.info(
         "ingestion handler complete",

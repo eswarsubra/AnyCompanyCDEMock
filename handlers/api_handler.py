@@ -30,6 +30,7 @@ from review_pipeline.config import load_config
 from review_pipeline.logging_config import configure_logging, get_logger
 
 from handlers import keys, s3_io
+from handlers.errors import client_error_code
 
 logger = get_logger(__name__)
 
@@ -161,14 +162,32 @@ def handler(
             400, {"error": "bad_request", "message": "unknown resource"}
         )
 
-    if store is None:
-        bucket = keys.resolve_bucket()
-        store = S3ReviewStore(bucket, client=s3_client)
+    # Loading the serving store and reading it both hit S3. If that fails after
+    # boto3's retries, return a 500 rather than letting an unhandled
+    # ClientError crash the invocation and surface as an opaque 502 to callers.
+    try:
+        if store is None:
+            bucket = keys.resolve_bucket()
+            store = S3ReviewStore(bucket, client=s3_client)
 
-    if resource == RESOURCE_SUMMARY:
-        result = api.get_product_summary(product_id, store)
-    else:
-        result = api.get_product_reviews(product_id, store)
+        if resource == RESOURCE_SUMMARY:
+            result = api.get_product_summary(product_id, store)
+        else:
+            result = api.get_product_reviews(product_id, store)
+    except Exception as exc:  # noqa: BLE001 — logged, returned as a 500
+        logger.error(
+            "api handler failed reading the serving store",
+            extra={
+                "product_id": product_id,
+                "resource": resource,
+                "error_type": type(exc).__name__,
+                "error_code": client_error_code(exc),
+            },
+        )
+        return _response(
+            500,
+            {"error": "internal_error", "message": "could not load review data"},
+        )
 
     status_code = 404 if result.get(api.ERROR_KEY) == api.ERROR_NOT_FOUND else 200
     logger.info(

@@ -19,6 +19,7 @@ from review_pipeline.config import load_config
 from review_pipeline.logging_config import configure_logging, get_logger
 
 from handlers import keys, s3_io
+from handlers.errors import stage_boundary
 
 logger = get_logger(__name__)
 
@@ -48,10 +49,19 @@ def handler(
     configure_logging(cfg.log_level)
     bucket = keys.resolve_bucket()
 
-    reviews = s3_io.read_json(bucket, keys.STAGED_TRANSLATED_KEY, client=s3_client)
-    scored = quality.score_translations(reviews, cfg, client=judge)
-    kept = quality.filter_kept(scored)
-    s3_io.write_json(bucket, keys.SERVING_SCORED_KEY, kept, client=s3_client)
+    with stage_boundary(
+        logger,
+        stage="quality",
+        bucket=bucket,
+        source_key=keys.STAGED_TRANSLATED_KEY,
+        target_key=keys.SERVING_SCORED_KEY,
+    ):
+        reviews = s3_io.read_json(
+            bucket, keys.STAGED_TRANSLATED_KEY, client=s3_client
+        )
+        scored = quality.score_translations(reviews, cfg, client=judge)
+        kept = quality.filter_kept(scored)
+        s3_io.write_json(bucket, keys.SERVING_SCORED_KEY, kept, client=s3_client)
 
     logger.info(
         "quality handler complete",

@@ -390,3 +390,84 @@ def test_api_handler_path_fallback_when_no_resource(s3: FakeS3Client) -> None:
     }
     response = api_handler.handler(event, None, s3_client=s3)
     assert response["statusCode"] == 200
+
+
+# --- external-boundary error handling ----------------------------------------
+
+
+class _FakeClientError(Exception):
+    """Stand-in for botocore.exceptions.ClientError (carries a ``response``)."""
+
+    def __init__(self, code: str = "InternalError") -> None:
+        super().__init__(code)
+        self.response = {"Error": {"Code": code, "Message": "boom"}}
+
+
+class FailingS3Client(FakeS3Client):
+    """FakeS3Client that raises a ClientError-shaped error on S3 access.
+
+    ``fail_on`` selects which operation blows up so tests can exercise both the
+    read boundary and the write boundary.
+    """
+
+    def __init__(self, fail_on: str = "get") -> None:
+        super().__init__()
+        self._fail_on = fail_on
+
+    def get_object(self, Bucket: str, Key: str) -> Dict[str, Any]:
+        if self._fail_on == "get":
+            raise _FakeClientError("AccessDenied")
+        return super().get_object(Bucket, Key)
+
+    def put_object(
+        self, Bucket: str, Key: str, Body: bytes, ContentType: str = ""
+    ) -> Dict[str, Any]:
+        if self._fail_on == "put":
+            raise _FakeClientError("ServiceUnavailable")
+        return super().put_object(Bucket, Key, Body, ContentType=ContentType)
+
+
+@pytest.mark.parametrize(
+    "handler_mod, seed_key, seed_obj",
+    [
+        (ingestion_handler, keys.RAW_REVIEWS_KEY, [_valid_en_review()]),
+        (translation_handler, keys.STAGED_INGESTED_KEY, [_valid_en_review()]),
+        (summarization_handler, keys.STAGED_TRANSLATED_KEY, [_valid_en_review()]),
+        (quality_handler, keys.STAGED_TRANSLATED_KEY, [_valid_en_review()]),
+    ],
+)
+def test_batch_handler_reraises_on_read_failure(handler_mod, seed_key, seed_obj) -> None:
+    """A failed S3 read re-raises so Step Functions retry/catch can act on it."""
+    failing = FailingS3Client(fail_on="get")
+    failing.seed(seed_key, seed_obj)  # irrelevant: get_object raises first
+    with pytest.raises(_FakeClientError):
+        handler_mod.handler({}, None, s3_client=failing)
+
+
+def test_ingestion_handler_reraises_on_write_failure() -> None:
+    """A failed S3 write also propagates out of the stage boundary."""
+    failing = FailingS3Client(fail_on="put")
+    failing.seed(keys.RAW_REVIEWS_KEY, [_valid_en_review()])
+    with pytest.raises(_FakeClientError):
+        ingestion_handler.handler({}, None, s3_client=failing)
+
+
+def test_api_handler_returns_500_on_s3_failure() -> None:
+    """The synchronous API handler converts an S3 failure into a 500, not a crash."""
+    failing = FailingS3Client(fail_on="get")
+    event = {
+        "resource": "/products/{productId}/reviews",
+        "pathParameters": {"productId": PRODUCT_ID},
+    }
+    response = api_handler.handler(event, None, s3_client=failing)
+    assert response["statusCode"] == 500
+    body = json.loads(response["body"])
+    assert body["error"] == "internal_error"
+
+
+def test_client_error_code_extracts_and_defaults() -> None:
+    """errors.client_error_code reads the AWS code and tolerates plain errors."""
+    from handlers.errors import client_error_code
+
+    assert client_error_code(_FakeClientError("Throttling")) == "Throttling"
+    assert client_error_code(ValueError("no response attr")) is None
