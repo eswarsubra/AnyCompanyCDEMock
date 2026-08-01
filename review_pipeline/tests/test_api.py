@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Behavioural tests for :mod:`review_pipeline.api` (stage 5 of 5).
 
 These tests exercise the documented read-API contract from

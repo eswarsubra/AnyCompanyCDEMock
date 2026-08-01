@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """AnyCompany Apparel review pipeline package.
 
 Shared library code for the review translation/summarization/quality pipeline.

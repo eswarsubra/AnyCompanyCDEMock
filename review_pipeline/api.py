@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Framework-light read API over the pipeline's output (stage 5 of 5).
 
 This module is the framework-agnostic core of the read path. It exposes two

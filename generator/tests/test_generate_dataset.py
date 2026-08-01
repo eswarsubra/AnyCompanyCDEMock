@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Unit tests for the synthetic review dataset generator.
 
 These tests rely on the inline `content_library` fixture (see conftest.py) and

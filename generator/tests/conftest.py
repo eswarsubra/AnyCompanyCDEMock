@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Shared pytest fixtures for the generator test suite.
 
 Provides a small INLINE content library so the tests do not depend on the real

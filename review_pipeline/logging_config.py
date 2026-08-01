@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Structured (JSON) logging for the pipeline.
 
 Emits one JSON object per log record so logs are queryable in CloudWatch Logs

@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Ingestion stage: load and validate review records.
 
 The first pipeline stage (see ``docs/pipeline-contracts.md``). It accepts either

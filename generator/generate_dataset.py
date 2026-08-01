@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Seeded synthetic review dataset generator.
 
 Assembles a curated multilingual content library (conforming to

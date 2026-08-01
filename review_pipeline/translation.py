@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Translation stage: translate review text into the configured target languages.
 
 This is stage 2 of the pipeline (``ingestion -> translation -> ...``). It reads

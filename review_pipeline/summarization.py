@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Summarization stage of the review pipeline (see docs/pipeline-contracts.md).
 
 Groups translated reviews by product and asks Amazon Bedrock (Claude Sonnet via

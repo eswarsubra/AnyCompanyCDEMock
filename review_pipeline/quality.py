@@ -1,3 +1,5 @@
+# Copyright 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 """Quality stage: score translations for fidelity and fluency (ADR-0002).
 
 This is stage 4 of the pipeline (``ingestion -> translation -> summarization ->
