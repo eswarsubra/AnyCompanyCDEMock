@@ -8,5 +8,10 @@
 boto3
 anthropic
 jsonschema
+# urllib3 is a transitive dependency (via botocore / anthropic's httpx). Pin it
+# clear of the known cookie-leak / cross-origin redirect / decompression-DoS
+# advisories (dependency scanning: ProtoShield/grype). The Lambda bundle pins the
+# same floor in lambda-requirements.txt; this keeps the source manifest aligned.
+urllib3>=2.7.0
 # Test/dev dependencies:
 pytest

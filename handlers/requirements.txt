@@ -5,5 +5,11 @@
 # Runtime: S3 access for the s3_io helper and the handlers.
 boto3
 
+# urllib3 is a transitive dependency (via botocore). Pin it clear of the known
+# cookie-leak / cross-origin redirect / decompression-DoS advisories flagged by
+# dependency scanning (ProtoShield/grype); matches the bundled floor in
+# lambda-requirements.txt.
+urllib3>=2.7.0
+
 # Test: unit tests for the handlers (no live AWS; boto3/S3 is mocked/faked).
 pytest
