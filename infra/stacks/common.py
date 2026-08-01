@@ -103,6 +103,11 @@ def lambda_code() -> lambda_.Code:
                     # Ship just that schema (not the 100-review dataset).
                     "mkdir -p /asset-output/data/schema",
                     "cp data/schema/*.json /asset-output/data/schema/",
+                    # config.load_config() defaults to <bundle root>/config/
+                    # pipeline.json (no REVIEW_PIPELINE_CONFIG override on the
+                    # functions), so ship the config file the handlers load.
+                    "mkdir -p /asset-output/config",
+                    "cp config/pipeline.json /asset-output/config/",
                 ]
             ),
         ],
